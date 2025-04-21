@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Page{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-item {% if request.path == '/' %}active{% endif %}">
+            <a href="/">Home</a>
+        </div>
+        <div class="nav-item {% if 'learn' in request.path %}active{% endif %}">
+            <a href="/learn/1">Tutorial</a>
+        </div>
+        <div class="nav-item {% if 'quiz' in request.path %}active{% endif %}">
+            <a href="/quiz/1">Quiz</a>
+        </div>
+
+        {% if 'learn' in request.path or 'quiz' in request.path %}
+            <div class="nav-progress">
+                Page {{ page_num }} of {{ total_pages }}
+            </div>
+        {% endif %}
+    </nav>
+
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+
+</body>
+</html>
