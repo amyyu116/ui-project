@@ -4,7 +4,17 @@
     <meta charset="UTF-8">
     <title>{% block title %}Page{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+
+    <!-- Required JS and CSS for Piano Interaction -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+    <script src="{{ url_for('static', filename='piano.js') }}"></script>
+
+    <!-- Optional Bootstrap (only if you’re using Bootstrap classes elsewhere) -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" />
 </head>
+    
 <body>
     <nav class="navbar">
         <div class="nav-item {% if request.path == '/' %}active{% endif %}">
@@ -28,5 +38,21 @@
         {% block content %}{% endblock %}
     </div>
 
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            fetch("/log-entry-time", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    page: window.location.pathname,
+                    timestamp: new Date().toISOString()
+                })
+            });
+        });
+    </script>
+
 </body>
 </html>
+
