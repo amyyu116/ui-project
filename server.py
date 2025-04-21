@@ -12,9 +12,12 @@ def welcome():
    return render_template()   
 
 @app.route('/learn/<page_num>')
-def render_restaurant(id=None):
-    return render_template()
+def render_restaurant(page_num=None):
+    return render_template(f"p{page_num}.html")
 
 @app.route('/quiz/<page_num>')
 def render_edit(id=None):
     return render_template()
+
+if __name__ == '__main__':
+   app.run(debug = True, port=5001)

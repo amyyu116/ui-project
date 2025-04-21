@@ -1,0 +1,80 @@
+<head>
+    <link rel="stylesheet" href="{{url_for('static', filename='main.css')}}" />
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+    <link
+        rel="stylesheet"
+        href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
+    />
+    <script
+        type="text/javascript"
+        src="{{ url_for('static', filename = 'piano.js') }}"
+    ></script>
+
+    <!-- Bootstrap CSS -->
+    <link
+        rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+    />
+</head>
+
+<div class="main">
+    <h3>Chord Notation in Major Scales</h3>
+    Each note in a scale is assigned a number based on its position, starting
+    from the tonic. Chords built on each of these notes are denoted with Roman
+    numerals.
+
+    <div class="piano" id="piano">
+        <!-- White Keys -->
+        <div class="white-key" data-note="C4">
+            <span class="key-label">C</span>
+        </div>
+        <div class="white-key" data-note="D4">
+            <span class="key-label">D</span>
+        </div>
+        <div class="white-key" data-note="E4">
+            <span class="key-label">E</span>
+        </div>
+        <div class="white-key" data-note="F4">
+            <span class="key-label">F</span>
+        </div>
+        <div class="white-key" data-note="G4">
+            <span class="key-label">G</span>
+        </div>
+        <div class="white-key" data-note="A4">
+            <span class="key-label">A</span>
+        </div>
+        <div class="white-key" data-note="B4">
+            <span class="key-label">B</span>
+        </div>
+        <div class="white-key" data-note="C5">
+            <span class="key-label">C</span>
+        </div>
+
+        <div class="black-key" style="left: 38px" data-note="C#4">
+            <span class="key-label">C#</span>
+        </div>
+        <div class="black-key" style="left: 98px" data-note="D#4">
+            <span class="key-label">D#</span>
+        </div>
+        <!-- No black key between E and F -->
+        <div class="black-key" style="left: 225px" data-note="F#4">
+            <span class="key-label">F#</span>
+        </div>
+        <div class="black-key" style="left: 285px" data-note="G#4">
+            <span class="key-label">G#</span>
+        </div>
+        <div class="black-key" style="left: 345px" data-note="A#4">
+            <span class="key-label">A#</span>
+        </div>
+        <div class="row"></div>
+    </div>
+    <div class="chords">
+        <button data-chord="ii_chord">ii</button>
+        <button data-chord="iii_chord">iii</button>
+        <button data-chord="iv_chord">iv</button>
+        <button data-chord="v_chord">v</button>
+        <button data-chord="vi_chord">vi</button>
+        <button data-chord="vii_chord">vii</button>
+    </div>
+</div>
