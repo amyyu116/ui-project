@@ -1,11 +1,12 @@
 {% extends "navbar.html" %} {% block title %}Chord Notation in Major Scales{%
 endblock %} {% block content %}
-<div class="main">
-    <h3>Chord Notation in Major Scales</h3>
-    Each note in a scale is assigned a number based on its position, starting
-    from the tonic. Chords built on each of these notes are denoted with Roman
-    numerals.
-
+<div class="tutorial-container">
+    <h1>Chord Notation in Major Scales</h1>
+    <p>
+        Each note in a scale is assigned a number based on its position,
+        starting from the tonic. <br />Chords built on each of these notes are
+        denoted with <b>Roman numerals</b>.
+    </p>
     <div class="piano" id="piano">
         <!-- White Keys -->
         <div class="white-key" data-note="C4">
@@ -32,6 +33,15 @@ endblock %} {% block content %}
         <div class="white-key" data-note="C5">
             <span class="key-label">C</span>
         </div>
+        <div class="white-key" data-note="D5">
+            <span class="key-label">D</span>
+        </div>
+        <div class="white-key" data-note="E5">
+            <span class="key-label">E</span>
+        </div>
+        <div class="white-key" data-note="F5">
+            <span class="key-label">F</span>
+        </div>
 
         <!-- Black Keys -->
         <div class="black-key" style="left: 38px" data-note="C#4">
@@ -40,33 +50,36 @@ endblock %} {% block content %}
         <div class="black-key" style="left: 98px" data-note="D#4">
             <span class="key-label">D#</span>
         </div>
-        <!-- No black key between E and F -->
-        <div class="black-key" style="left: 225px" data-note="F#4">
+        <div class="black-key" style="left: 222px" data-note="F#4">
             <span class="key-label">F#</span>
         </div>
-        <div class="black-key" style="left: 285px" data-note="G#4">
+        <div class="black-key" style="left: 282px" data-note="G#4">
             <span class="key-label">G#</span>
         </div>
-        <div class="black-key" style="left: 345px" data-note="A#4">
+        <div class="black-key" style="left: 342px" data-note="A#4">
             <span class="key-label">A#</span>
+        </div>
+        <div class="black-key" style="left: 462px" data-note="C#5">
+            <span class="key-label">C#</span>
+        </div>
+        <div class="black-key" style="left: 522px" data-note="D#5">
+            <span class="key-label">D#</span>
         </div>
     </div>
 
     <div class="chord-buttons">
         <button data-chord="i_chord">I</button>
-            <button data-chord="ii_chord">ii</button>
-            <button data-chord="iii_chord">iii</button>
-            <button data-chord="iv_chord">iv</button>
-            <button data-chord="v_chord">v</button>
-            <button data-chord="vi_chord">vi</button>
-            <button data-chord="vii_chord">vii</button>
-        </div>
-
-        <div class="navigation-buttons">
-            <a href="/learn/2"><button>Back</button></a>
-            <span>3/10</span>
-            <a href="/learn/4"><button>Next</button></a>
-        </div>
+        <button data-chord="ii_chord">ii</button>
+        <button data-chord="iii_chord">iii</button>
+        <button data-chord="iv_chord">IV</button>
+        <button data-chord="v_chord">V</button>
+        <button data-chord="vi_chord">vi</button>
+        <button data-chord="vii_chord">vii°</button>
     </div>
+</div>
+<div class="navigation-buttons">
+    <a href="/learn/2"><button>Back</button></a>
+    <span>3/10</span>
+    <a href="/learn/4"><button>Next</button></a>
 </div>
 {% endblock %}
