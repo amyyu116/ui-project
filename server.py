@@ -6,7 +6,7 @@ import re
 from datetime import datetime
 
 app = Flask(__name__)
-
+user_data = {}
 # ROUTES
 @app.route('/')
 def welcome():

@@ -1,3 +1,5 @@
+{% extends "navbar.html" %} {% block content %}
+
 <head>
     <link rel="stylesheet" href="{{url_for('static', filename='main.css')}}" />
     <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -67,9 +69,10 @@
         <div class="black-key" style="left: 345px" data-note="A#4">
             <span class="key-label">A#</span>
         </div>
-        <div class="row"></div>
     </div>
-    <div class="chords">
+
+    <div class="chord-buttons">
+        <button data-chord="i_chord">I</button>
         <button data-chord="ii_chord">ii</button>
         <button data-chord="iii_chord">iii</button>
         <button data-chord="iv_chord">iv</button>
@@ -78,3 +81,5 @@
         <button data-chord="vii_chord">vii</button>
     </div>
 </div>
+
+{% endblock %}
