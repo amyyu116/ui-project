@@ -1,10 +1,59 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Page 1 of learning</title>
-</head>
-<body>
-    <h1>Page 1</h1>
-    <p>This is where the first learning page will go.</p>
-</body>
-</html>
+{% extends "navbar.html" %}
+
+{% block title %}Chords and Chord Qualities{% endblock %}
+
+{% block content %}
+<div class="tutorial-container">
+    <h1>Chords and Chord Qualities</h1>
+    <p>
+        A <strong>chord</strong> is when you play three or more musical notes at the same time.
+        Depending on <strong>quality</strong> of the chords, they can sound happy, sad, tense, or relaxed.
+    </p>
+
+    <div class="content-grid">
+        <table class="chord-table">
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Associated Sound</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Major</td>
+                    <td>Happy or bright</td>
+                    <td><button class="audio-button">🔊</button></td>
+                </tr>
+                <tr>
+                    <td>Minor</td>
+                    <td>Sad or serious, melancholic</td>
+                    <td><button class="audio-button">🔊</button></td>
+                </tr>
+                <tr>
+                    <td>Diminished</td>
+                    <td>Tense or spooky</td>
+                    <td><button class="audio-button">🔊</button></td>
+                </tr>
+                <tr>
+                    <td>Augmented</td>
+                    <td>Unusual or dreamy</td>
+                    <td><button class="audio-button">🔊</button></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="side-note">
+            In this tutorial, we will mainly discuss <strong>major</strong> and <strong>minor</strong> chords.
+        </div>
+    </div>
+
+    <div class="navigation-buttons">
+        <button disabled>Back</button>
+        <span>1/10</span>
+        <a href="/learn/2"><button>Next</button></a>
+    </div>
+</div>
+
+
+{% endblock %}

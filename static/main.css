@@ -11,7 +11,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 80vh;
     text-align: center;
 }
 
@@ -125,4 +125,117 @@ p {
 
 .key-label {
     padding: 5px;
+}
+.tutorial-container {
+    padding: 40px;
+    font-family: "Segoe UI", sans-serif;
+}
+
+.tutorial-container h1 {
+    font-size: 2em;
+    margin-bottom: 10px;
+    color: #003366;
+}
+
+.tutorial-container p {
+    font-size: 1.1em;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.content-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+    align-items: start;
+    margin-bottom: 30px;
+}
+
+.chord-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.chord-table th,
+.chord-table td {
+    padding: 12px 16px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+    text-align: left;
+}
+
+.audio-button {
+    background: none;
+    border: none;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+.audio-button:hover {
+    color: #3399ff;
+}
+
+.side-note {
+    font-size: 1em;
+    background-color: #e6f4ff;
+    padding: 20px;
+    border-left: 5px solid #3399ff;
+    border-radius: 6px;
+    color: #003366;
+}
+
+.navigation-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.navigation-buttons button {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.navigation-buttons button:hover {
+    background-color: #d9eaff;
+}
+
+.navigation-buttons span {
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+.image-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.image-container img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+}
+
+.image-caption {
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-top: 5px;
+    color: #333;
+}
+
+.blue {
+    color: #3366ff;
+    font-weight: bold;
+}
+
+.red {
+    color: red;
+    font-weight: bold;
 }

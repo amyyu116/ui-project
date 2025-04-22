@@ -1,25 +1,5 @@
-{% extends "navbar.html" %} {% block content %}
-
-<head>
-    <link rel="stylesheet" href="{{url_for('static', filename='main.css')}}" />
-    <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
-    <link
-        rel="stylesheet"
-        href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
-    />
-    <script
-        type="text/javascript"
-        src="{{ url_for('static', filename = 'piano.js') }}"
-    ></script>
-
-    <!-- Bootstrap CSS -->
-    <link
-        rel="stylesheet"
-        href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-    />
-</head>
-
+{% extends "navbar.html" %} {% block title %}Chord Notation in Major Scales{%
+endblock %} {% block content %}
 <div class="main">
     <h3>Chord Notation in Major Scales</h3>
     Each note in a scale is assigned a number based on its position, starting
@@ -53,6 +33,7 @@
             <span class="key-label">C</span>
         </div>
 
+        <!-- Black Keys -->
         <div class="black-key" style="left: 38px" data-note="C#4">
             <span class="key-label">C#</span>
         </div>
@@ -73,13 +54,19 @@
 
     <div class="chord-buttons">
         <button data-chord="i_chord">I</button>
-        <button data-chord="ii_chord">ii</button>
-        <button data-chord="iii_chord">iii</button>
-        <button data-chord="iv_chord">iv</button>
-        <button data-chord="v_chord">v</button>
-        <button data-chord="vi_chord">vi</button>
-        <button data-chord="vii_chord">vii</button>
+            <button data-chord="ii_chord">ii</button>
+            <button data-chord="iii_chord">iii</button>
+            <button data-chord="iv_chord">iv</button>
+            <button data-chord="v_chord">v</button>
+            <button data-chord="vi_chord">vi</button>
+            <button data-chord="vii_chord">vii</button>
+        </div>
+
+        <div class="navigation-buttons">
+            <a href="/learn/2"><button>Back</button></a>
+            <span>3/10</span>
+            <a href="/learn/4"><button>Next</button></a>
+        </div>
     </div>
 </div>
-
 {% endblock %}
