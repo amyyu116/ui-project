@@ -1,0 +1,25 @@
+.row {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr); /* 6 equal parts = 12-grid style */
+    gap: 10px;
+    margin-bottom: 30px;
+    width: 100%;
+    max-width: 1000px; /* Optional max width */
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .col {
+    padding: 10px;
+  }
+  
+  /* Simulate col-md-2 by spanning 2/12 (i.e. 2 out of 6 units = 1fr each) */
+  .blank {
+    grid-column: span 1; /* 1 of 6 units = 2 Bootstrap columns */
+  }
+  
+  .content {
+    grid-column: span 1;
+    background-color: #f0f0f0; /* Optional for visibility */
+    text-align: center;
+  }
