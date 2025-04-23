@@ -4,11 +4,18 @@
 
 {% block content %}
 <div class="tutorial-container">
-    <h1>HEADING</h1>
+    <h1>Popular Progressions: "the ii-V-I"</h1>
 
-    <p>
-        INFO
-    </p>
+    <p class="list-header"><strong>Example</strong></p>
+
+        <div class="image-container">
+            <p><em>“Fly Me to the Moon" chorus</em></p>
+            <br>
+            <video controls>
+                <source src="{{ url_for('static', filename='flymetothemoon.mp4') }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
 
     <div class="navigation-buttons">
         <a href="/learn/8"><button>Back</button></a>

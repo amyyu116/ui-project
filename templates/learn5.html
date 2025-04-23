@@ -1,14 +1,34 @@
 {% extends "navbar.html" %}
 
-{% block title %}HEADING{% endblock %}
+{% block title %}Popular Progressions{% endblock %}
 
 {% block content %}
 <div class="tutorial-container">
-    <h1>HEADING</h1>
+    <h1>Popular Progressions: "four-chord progression"
+    </h1>
 
-    <p>
-        INFO
-    </p>
+    <p class="list-header"><strong>Example</strong></p>
+
+    
+    <div class="image-grid">
+        <div class="image-container">
+            <p><em>“Someone Like You” chorus</em></p>
+            <br>
+            <video controls>
+                <source src="{{ url_for('static', filename='someonelikeyou.mp4') }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+
+        <div class="image-container">
+            <p><em>“Little Talks” chorus</em></p>
+            <br>
+            <video controls>
+                <source src="{{ url_for('static', filename='littletalks.mp4') }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </div>
 
     <div class="navigation-buttons">
         <a href="/learn/4"><button>Back</button></a>

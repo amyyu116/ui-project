@@ -147,6 +147,17 @@ p {
     color: #333;
 }
 
+.tutorial-container ul {
+    text-align: left;
+    padding-left: 1.5rem;
+    margin: 0;
+}
+
+.tutorial-container .list-header {
+    text-align: left;
+    margin-bottom: 8px;
+}
+
 .content-grid {
     display: grid;
     grid-template-columns: 2fr 1fr;
@@ -227,11 +238,26 @@ p {
     box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
 }
 
+.image-container video {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+}
+
 .image-caption {
     font-weight: bold;
     font-size: 1.1em;
     margin-top: 5px;
     color: #333;
+}
+
+.image-grid {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+    width: 100%;
 }
 
 .blue {
