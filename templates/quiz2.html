@@ -1,0 +1,83 @@
+{% extends "navbar.html" %}
+{% block title %}Question 1 Answer{% endblock %}
+
+{% block content %}
+<head>
+    <style>
+        body.quiz .container {
+            display: block;
+            flex-direction: center;
+            justify-content: center;
+            align-items: center;
+            height: auto;
+            text-align: initial;
+            width: 100%;
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        .btn-option {
+            width: 100%;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            background-color: white;
+            border: 2px solid #ddd; /* Set the initial border color */
+            transition: all 0.3s ease; /* Smooth transition for color change */
+        }
+
+        body.quiz h4 {
+            font-weight: normal;
+        }
+
+        .btn-option.correct {
+            background-color: green !important;
+            color: white !important;
+            border-color: green !important;
+        }
+
+        .btn-option.incorrect {
+            background-color: red !important;
+            color: white !important;
+            border-color: red !important;
+        }
+    </style>
+</head>
+
+<body class="quiz">
+    <div class="tutorial-container">
+        <h1>Question 1: Answer</h1>
+        <p>Correct answers highlighted below.</p>
+    </div>
+
+    <div class="container">
+        <div class="row justify-content-center" style="text-align: center;">
+            <div class="col-md-3">
+                <h4>Associated Sound</h4>
+                <button class="btn btn-option sound" id="happy" data-correct="true">Happy/Bright</button>
+                <button class="btn btn-option sound" id="melancholy" data-correct="false">Melancholic/Sad</button>
+            </div>
+
+            <div class="col-md-2"></div>
+
+            <div class="col-md-3">
+                <h4>Lowercase/Uppercase</h4>
+                <button class="btn btn-option case" id="lowercase" data-correct="false">Lowercase</button>
+                <button class="btn btn-option case" id="uppercase" data-correct="true">Uppercase</button>
+            </div>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="navigation-buttons">
+        <a href="/quiz/1"><button>Back</button></a>
+        <span>2/10</span>
+        <a href="/quiz/3"><button id="next-button" disabled>Next</button></a>
+    </div>
+    <script src="{{ url_for('static', filename='quiz.js') }}"></script>
+</body>
+{% endblock %}

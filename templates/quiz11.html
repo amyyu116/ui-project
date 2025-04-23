@@ -1,0 +1,104 @@
+{% extends "navbar.html" %}
+{% block title %}Final Score{% endblock %}
+
+{% block content %}
+<head>
+    <style>
+        body.quiz .container {
+            display: block;
+            flex-direction: center;
+            justify-content: center;
+            align-items:center;
+            height: auto;
+            text-align: initial;
+            width: 100%;
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        .btn-option {
+            width: 100%;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem; /* Optional: make text a bit bigger */
+            background-color: white;
+        }
+
+        body.quiz h4 {
+            font-weight: normal;
+        }
+
+        .btn-option.selected {
+            background-color: black !important;
+            color: white !important;
+            border-color: black !important;
+        }
+
+        .btn-option.correct {
+            background-color: #28a745 !important; /* green */
+            color: white !important;
+            border-color: #28a745 !important;
+        }
+
+        .btn-option.incorrect {
+            background-color: #dc3545 !important; /* red */
+            color: white !important;
+            border-color: #dc3545 !important;
+        }
+
+        .final-score {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .navigation-buttons a button {
+            padding: 10px 20px;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+
+<body class="quiz">
+
+    <div class="tutorial-container">
+        <h1>Final Score</h1>
+        <p>Congratulations! You've completed all the quizzes.</p>
+    </div>
+
+    <div class="container">
+        <div class="row justify-content-center" style="text-align: center;">
+            <div class="col-md-12">
+                <div class="final-score">
+                    Your total score is: <span id="final-score">0</span> points
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="navigation-buttons">
+        <a href="/quiz/10"><button>Back</button></a>
+        <span>11/11</span>
+        <a href="/"><button>Go to Home</button></a>
+    </div>
+
+    <script src="{{ url_for('static', filename='quiz.js') }}"></script>
+    <script>
+        // When the page loads, display the total points
+        $(document).ready(function () {
+            let quizPoints = parseInt(sessionStorage.getItem("quizPoints") || "0");
+            $("#final-score").text(quizPoints);
+        });
+    </script>
+
+</body>
+{% endblock %}

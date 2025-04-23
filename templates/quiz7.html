@@ -1,6 +1,5 @@
 {% extends "navbar.html" %}
-
-{% block title %}Question 1{% endblock %}
+{% block title %}Question 4{% endblock %}
 
 {% block content %}
 <head>
@@ -49,66 +48,60 @@
             color: white !important;
             border-color: #dc3545 !important;
         }
+
+        audio {
+            width: 200px;
+            outline: none;
+        }
+
     </style>
 </head>
 
 <body class="quiz">
+
     <div class="tutorial-container">
-        <h1>Quiz - Question 1</h1>
-        <p>
-            How are major chords denoted and characterized in music (select one option for each)?
-        </p>
-    </div>
-    
-    <div class="container ">
-        <div class="row justify-content-center" style="text-align: center;">
-            <div class="col-md-2"></div>
-            
-            <div class="col-md-3">
-                <div class="row justify-content-center">
-                    <h4>Associated Sound</h4>
-                </div>
+        <h1>Question 4</h1>
+        <p>What genre is the following chord progression associated with?</p>
 
-                <div class="row justify-content-center mb-2">
-                    <button type="button" class="btn btn-outline-dark btn-option" data-group="sound" data-correct="true" id="happy">Happy/Bright</button>
-                </div>
-
-                <div class="row justify-content-center">
-                    <button type="button" class="btn btn-outline-dark btn-option" data-group="sound" data-correct="false" id="melancholy">Melancholic/Sad</button>
-                </div>
-            </div>
-                
-            <div class="col-md-2">
-                <div class="row"></div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="row justify-content-center">
-                    <h4>Lowercase/Uppercase</h4>
-                </div>
-
-                <div class="row justify-content-center mb-2">
-                    <button type="button" class="btn btn-outline-dark btn-option" data-group="case" data-correct="false" id="lowercase">Lowercase</button>
-                </div>
-
-                <div class="row justify-content-center">
-                    <button type="button" class="btn btn-outline-dark btn-option" data-group="case" data-correct="true" id="uppercase">Uppercase</button>
-                </div>
-            </div>
-
-            <div class="col-md-2"></div>
+        <div>
+            <audio controls>
+                <source src="{{ url_for('static', filename='q4_audio.mp3') }}" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
         </div>
     </div>
-    
-    <br>
+
+    <div class="container">
+        <div class="row justify-content-center" style="text-align: center;">
+            <div class="col-md-4"></div>
+
+            <div class="col-md-4">
+                <div class="row justify-content-center mb-2">
+                    <button type="button" class="btn btn-outline-dark btn-option" data-group="q4" data-correct="true" id="q4opt1">Jazz</button>
+                </div>
+
+                <div class="row justify-content-center mb-2">
+                    <button type="button" class="btn btn-outline-dark btn-option" data-group="q4" data-correct="false" id="q4opt2">Pop</button>
+                </div>
+
+                <div class="row  mb-2">
+                    <button type="button" class="btn btn-outline-dark btn-option" data-group="q4" data-correct="false" id="q4opt3">Rock</button>
+                </div>
+
+                <div class="row mb-2">
+                    <button type="button" class="btn btn-outline-dark btn-option" data-group="q4" data-correct="false" id="q4opt4">Blues</button>
+                </div>
+
+            </div>
+
+            <div class="col-md-4"></div>
+        </div>
 
     <div class="navigation-buttons">
-        <a href="/learn/10"><button>Back to tutorial</button></a>
-        <span>1/10</span>
-        <a href="/quiz/2"><button id="next-button" disabled>Next</button></a>
+        <a href="/quiz/6"><button>Back</button></a>
+        <span>7/10</span>
+        <a href="/quiz/8"><button id="next-button" disabled>Next</button></a>
     </div>
-
     <script src="{{ url_for('static', filename='quiz.js') }}"></script>
 </body>
-
 {% endblock %}

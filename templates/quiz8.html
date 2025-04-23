@@ -1,0 +1,99 @@
+{% extends "navbar.html" %}
+{% block title %}Question 4 Answer{% endblock %}
+
+{% block content %}
+<head>
+    <style>
+        body.quiz .container {
+            display: block;
+            flex-direction: center;
+            justify-content: center;
+            align-items: center;
+            height: auto;
+            text-align: initial;
+            width: 100%;
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        .btn-option {
+            width: 100%;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            background-color: white;
+            border: 2px solid #ddd; /* Set the initial border color */
+            transition: all 0.3s ease; /* Smooth transition for color change */
+        }
+
+        body.quiz h4 {
+            font-weight: normal;
+        }
+
+        .btn-option.correct {
+            background-color: green !important;
+            color: white !important;
+            border-color: green !important;
+        }
+
+        .btn-option.incorrect {
+            background-color: red !important;
+            color: white !important;
+            border-color: red !important;
+        }
+    </style>
+</head>
+
+<body class="quiz">
+    <div class="tutorial-container">
+        <h1>Question 4: Answer</h1>
+        <p>Correct answers highlighted below.</p>
+
+        <div>
+            <audio controls>
+                <source src="{{ url_for('static', filename='q4_audio.mp3') }}" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row justify-content-center" style="text-align: center;">
+            <div class="col-md-4"></div>
+
+            <div class="col-md-4">
+                <div class="row justify-content-center mb-2">
+                    <button class="btn btn-option" id="q4opt1" data-group="q4" data-correct="true">Jazz</button>
+                </div>
+
+                <div class="row justify-content-center mb-2">
+                    <button class="btn btn-option" id="q4opt2" data-group="q4" data-correct="false">Pop</button>
+                </div>
+        
+                <div class="row justify-content-center mb-2">
+                    <button class="btn btn-option" id="q4opt3" data-group="q4" data-correct="false">Rock</button>
+                </div>
+    
+                <div class="row justify-content-center mb-2">
+                    <button class="btn btn-option" id="q4opt4" data-group="q4" data-correct="false">Blues</button>
+                </div>
+
+            </div>
+
+            <div class="col-md-4"></div>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="navigation-buttons">
+        <a href="/quiz/7"><button>Back</button></a>
+        <span>8/10</span>
+        <a href="/quiz/9"><button id="next-button" disabled>Next</button></a>
+    </div>
+    <script src="{{ url_for('static', filename='quiz.js') }}"></script>
+</body>
+{% endblock %}

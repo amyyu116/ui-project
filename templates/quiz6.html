@@ -1,0 +1,92 @@
+{% extends "navbar.html" %}
+{% block title %}Question 3 Answer{% endblock %}
+
+{% block content %}
+<head>
+    <style>
+        body.quiz .container {
+            display: block;
+            flex-direction: center;
+            justify-content: center;
+            align-items: center;
+            height: auto;
+            text-align: initial;
+            width: 100%;
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        .btn-option {
+            width: 100%;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            background-color: white;
+            border: 2px solid #ddd; /* Set the initial border color */
+            transition: all 0.3s ease; /* Smooth transition for color change */
+        }
+
+        body.quiz h4 {
+            font-weight: normal;
+        }
+
+        .btn-option.correct {
+            background-color: green !important;
+            color: white !important;
+            border-color: green !important;
+        }
+
+        .btn-option.incorrect {
+            background-color: red !important;
+            color: white !important;
+            border-color: red !important;
+        }
+    </style>
+</head>
+
+<body class="quiz">
+    <div class="tutorial-container">
+        <h1>Question 3: Answer</h1>
+        <p>Correct answers highlighted below.</p>
+    </div>
+
+    <div class="container">
+        <div class="row justify-content-center" style="text-align: center;">
+            <div class="col-md-4"></div>
+
+            <div class="col-md-4">
+                <div class="row justify-content-center mb-2">
+                    <button class="btn btn-option" id="q3opt1" data-group="q3" data-correct="false">Being named after Pachelbel Canon</button>
+                </div>
+
+                <div class="row justify-content-center mb-2">
+                    <button class="btn btn-option" id="q3opt2" data-group="q3" data-correct="true">Its diversity across genres</button>
+                </div>
+        
+                <div class="row justify-content-center mb-2">
+                    <button class="btn btn-option" id="q3opt3" data-group="q3" data-correct="false">Its use in modern day music</button>
+                </div>
+    
+                <div class="row justify-content-center mb-2">
+                    <button class="btn btn-option" id="q3opt4" data-group="q3" data-correct="false">Being easy to improvise off of</button>
+                </div>
+
+            </div>
+
+            <div class="col-md-4"></div>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="navigation-buttons">
+        <a href="/quiz/5"><button>Back</button></a>
+        <span>6/10</span>
+        <a href="/quiz/7"><button id="next-button" disabled>Next</button></a>
+    </div>
+    <script src="{{ url_for('static', filename='quiz.js') }}"></script>
+</body>
+{% endblock %}

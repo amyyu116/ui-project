@@ -1,0 +1,116 @@
+{% extends "navbar.html" %}
+{% block title %}Question 5{% endblock %}
+
+{% block content %}
+<head>
+    <style>
+        body.quiz .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .video-box {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .video-box iframe {
+            width: 300px;
+            height: 170px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+        }
+
+        .match-select {
+            display: block;
+            margin: 0 auto;
+            width: fit-content;
+        }
+
+        .centered-col {
+            margin-left: -10px; /* Adjust as needed for fine-tuning */
+        }
+
+        .row-video-answer {
+            margin-bottom: 2rem;
+        }
+
+        .navigation-buttons {
+            margin-top: 40px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body class="quiz">
+
+    <div class="tutorial-container">
+        <h1>Question 5</h1>
+        <p>Match each video with the correct musical genre.</p>
+    </div>
+
+    <div class="container mt-4">
+        <!-- Video + Answer Row 1 -->
+        <div class="row justify-content-center align-items-center row-video-answer">
+            <div class="col-md-6 d-flex flex-column align-items-center centered-col" style="margin-top: 175px;">
+                <div class="video-box" data-id="v1">
+                    <iframe src="https://drive.google.com/file/d/1p5zPOhZpRQ5ZbeOoOSRlnt4ifKD00NqH/preview" allow="autoplay"></iframe>
+                </div>
+                <select class="match-select" data-video-id="v1">
+                    <option value="">Select an answer</option>
+                    <option value="a1">I–V–vi–IV</option>
+                    <option value="a2">I–V–vi–iii-IV</option>
+                    <option value="a3">ii–V–I</option>
+                </select>
+                <!-- User answer display -->
+                <p>Your answer: <span class="user-answer user-answer-v1"></span></p>
+            </div>
+        </div>
+
+        <!-- Video + Answer Row 2 -->
+        <div class="row justify-content-center align-items-center row-video-answer">
+            <div class="col-md-6 d-flex flex-column align-items-center centered-col" >
+                <div class="video-box" data-id="v2">
+                    <iframe src="https://drive.google.com/file/d/196xwgyGOigj2DBFBCigXE4dtV1NYnZm4/preview" allow="autoplay"></iframe>
+                </div>
+                <select class="match-select" data-video-id="v2">
+                    <option value="">Select an answer</option>
+                    <option value="a1">I–V–vi–IV</option>
+                    <option value="a2">I–V–vi–iii-IV</option>
+                    <option value="a3">ii–V–I</option>
+                </select>
+                <!-- User answer display -->
+                <p>Your answer: <span class="user-answer user-answer-v2"></span></p>
+            </div>
+        </div>
+
+        <!-- Video + Answer Row 3 -->
+        <div class="row justify-content-center align-items-center row-video-answer">
+            <div class="col-md-6 d-flex flex-column align-items-center centered-col">
+                <div class="video-box" data-id="v3">
+                    <iframe src="https://drive.google.com/file/d/1q7HH34g1BYuIGt7Ebeu8lEsMLwfj8bbF/preview" allow="autoplay"></iframe>
+                </div>
+                <select class="match-select" data-video-id="v3">
+                    <option value="">Select an answer</option>
+                    <option value="a1">I–V–vi–IV</option>
+                    <option value="a2">I–V–vi–iii-IV</option>
+                    <option value="a3">ii–V–I</option>
+                </select>
+                <!-- User answer display -->
+                <p>Your answer: <span class="user-answer user-answer-v3"></span></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="navigation-buttons" style="margin-top: 225px;">
+        <a href="/quiz/8"><button>Back</button></a>
+        <span>9/10</span>
+        <a href="/quiz/10"><button id="next-button" disabled>Next</button></a>
+    </div>
+
+    <script src="{{ url_for('static', filename='quiz.js') }}"></script>
+</body>
+{% endblock %}
