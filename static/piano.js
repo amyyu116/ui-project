@@ -1,5 +1,6 @@
 let audio;
 const interval = 575;
+let timeouts = []; // Store timeout IDs
 
 let chords = {
     i_chord: ["C4", "E4", "G4"],
@@ -19,21 +20,31 @@ function clearKeys() {
     $("div[data-note]").css("background-color", "");
 }
 
+function clearTimeouts() {
+    for (let id of timeouts) {
+        clearTimeout(id);
+    }
+    timeouts = [];
+}
+
 function playAudio(notes, interval) {
-    clearKeys(); // Clear any previous highlights
+    clearTimeouts(); // FIRST: cancel previous animations
+    clearKeys(); // THEN: immediately clear keys
 
     for (let i = 0; i < notes.length; ++i) {
-        setTimeout(() => {
-            clearKeys(); // Clear previous highlight
-            pressKey(notes[i]); // Highlight current key
+        const timeoutId = setTimeout(() => {
+            clearKeys();
+            pressKey(notes[i]);
         }, interval * i);
+        timeouts.push(timeoutId);
     }
 
-    // Highlight all notes together after staggered presses
-    setTimeout(() => {
+    const finalTimeoutId = setTimeout(() => {
         clearKeys();
         notes.forEach(pressKey);
     }, interval * notes.length);
+
+    timeouts.push(finalTimeoutId);
 }
 
 $(document).ready(function () {
@@ -42,10 +53,13 @@ $(document).ready(function () {
         const notes = chords[chordName];
         if (!notes) return;
 
-        // Play visual animation
+        clearTimeouts(); // <- ADD THIS at the start too for safety
+        clearKeys();
+
+        // Visual animation
         playAudio(notes, interval);
 
-        // Play audio
+        // Audio
         if (audio) {
             audio.pause();
             audio.currentTime = 0;
@@ -53,9 +67,25 @@ $(document).ready(function () {
         audio = new Audio(`../static/${chordName}.mp3`);
         audio.play();
 
-        // Clear highlights when audio ends
         audio.onended = function () {
             clearKeys();
         };
+
+        $.ajax({
+            type: "POST",
+            url: "/log_chord",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({
+                chord: chordName,
+                timestamp: new Date().toISOString(),
+            }),
+            success: function (result) {
+                console.log(`Chord ${chordName} logged successfully`);
+            },
+            error: function (request, status, error) {
+                console.log(`Error logging chord: ${error}`);
+            },
+        });
     });
 });

@@ -1,9 +1,9 @@
 $(document).ready(function () {
     let accPoints = 0;
-    
+
     let selections = {
         sound: null,
-        case: null
+        case: null,
     };
 
     // --- QUIZ 1 ---
@@ -14,7 +14,7 @@ $(document).ready(function () {
 
         selections[group] = {
             id: $this.attr("id"),
-            isCorrect: isCorrect
+            isCorrect: isCorrect,
         };
 
         // Deselect others in the group
@@ -63,8 +63,7 @@ $(document).ready(function () {
                 let $btn = $(`#${id}`);
                 if (isCorrect === false || isCorrect === "false") {
                     $btn.addClass("incorrect");
-                }
-                else {
+                } else {
                     accPoints += 1;
                 }
             }
@@ -82,7 +81,7 @@ $(document).ready(function () {
 
             quiz3Selections[group] = {
                 id: $this.attr("id"),
-                isCorrect: isCorrect
+                isCorrect: isCorrect,
             };
 
             // Deselect all in this group
@@ -90,7 +89,10 @@ $(document).ready(function () {
             $this.addClass("selected");
 
             // Save to sessionStorage
-            sessionStorage.setItem("quiz3Selections", JSON.stringify(quiz3Selections));
+            sessionStorage.setItem(
+                "quiz3Selections",
+                JSON.stringify(quiz3Selections)
+            );
 
             // Enable Next after one selection (since it's one question)
             $("#next-button").prop("disabled", false);
@@ -150,7 +152,7 @@ $(document).ready(function () {
 
             quiz5Selections[group] = {
                 id: $this.attr("id"),
-                isCorrect: isCorrect
+                isCorrect: isCorrect,
             };
 
             // Deselect all in this group
@@ -158,7 +160,10 @@ $(document).ready(function () {
             $this.addClass("selected");
 
             // Save to sessionStorage
-            sessionStorage.setItem("quiz5Selections", JSON.stringify(quiz5Selections));
+            sessionStorage.setItem(
+                "quiz5Selections",
+                JSON.stringify(quiz5Selections)
+            );
 
             // Enable Next after one selection (since it's one question)
             $("#next-button").prop("disabled", false);
@@ -204,8 +209,8 @@ $(document).ready(function () {
         }
     }
 
-     // --- QUIZ 7 ---
-     if (window.location.pathname.includes("/quiz/7")) {
+    // --- QUIZ 7 ---
+    if (window.location.pathname.includes("/quiz/7")) {
         let quiz7Selections = {};
 
         $(".btn-option").click(function () {
@@ -215,7 +220,7 @@ $(document).ready(function () {
 
             quiz7Selections[group] = {
                 id: $this.attr("id"),
-                isCorrect: isCorrect
+                isCorrect: isCorrect,
             };
 
             // Deselect all in this group
@@ -223,7 +228,10 @@ $(document).ready(function () {
             $this.addClass("selected");
 
             // Save to sessionStorage
-            sessionStorage.setItem("quiz7Selections", JSON.stringify(quiz7Selections));
+            sessionStorage.setItem(
+                "quiz7Selections",
+                JSON.stringify(quiz7Selections)
+            );
 
             // Enable Next after one selection (since it's one question)
             $("#next-button").prop("disabled", false);
@@ -269,15 +277,15 @@ $(document).ready(function () {
         }
     }
 
-   // --- QUIZ 9 ---
+    // --- QUIZ 9 ---
     if (window.location.pathname.includes("/quiz/9")) {
         let quiz9Selections = {};
 
         // Correct answers for Quiz 9 (matching the options in the <select> element)
         const correctAnswers = {
-            "v1": "a3", // First video correct answer
-            "v2": "a1", // Second video correct answer
-            "v3": "a2"  // Third video correct answer
+            v1: "a3", // First video correct answer
+            v2: "a1", // Second video correct answer
+            v3: "a2", // Third video correct answer
         };
 
         // When an answer is selected
@@ -289,11 +297,16 @@ $(document).ready(function () {
             quiz9Selections[videoId] = selectedAnswer;
 
             // Enable Next button only after all selections are made
-            let allAnswered = Object.keys(quiz9Selections).length === Object.keys(correctAnswers).length;
+            let allAnswered =
+                Object.keys(quiz9Selections).length ===
+                Object.keys(correctAnswers).length;
             $("#next-button").prop("disabled", !allAnswered);
 
             // Save to sessionStorage for Quiz 9
-            sessionStorage.setItem("quiz9Selections", JSON.stringify(quiz9Selections));
+            sessionStorage.setItem(
+                "quiz9Selections",
+                JSON.stringify(quiz9Selections)
+            );
 
             // Update the "Your answer:" display for the current video
             $(`.user-answer-${videoId}`).text(selectedAnswer); // This updates the user's answer display
@@ -305,7 +318,9 @@ $(document).ready(function () {
             let parsed = JSON.parse(storedQuiz9Selections);
             for (let videoId in parsed) {
                 // Restore the selected value in the dropdown
-                $(`.match-select[data-video-id=${videoId}]`).val(parsed[videoId]);
+                $(`.match-select[data-video-id=${videoId}]`).val(
+                    parsed[videoId]
+                );
 
                 // Update the "Your answer:" display
                 $(`.user-answer-${videoId}`).text(parsed[videoId]);
@@ -316,9 +331,9 @@ $(document).ready(function () {
     if (window.location.pathname.includes("/quiz/10")) {
         // Correct answers for Quiz 10 (for reference)
         const correctAnswers = {
-            "v1": "a3", // Correct answer for video 1
-            "v2": "a1", // Correct answer for video 2
-            "v3": "a2"  // Correct answer for video 3
+            v1: "a3", // Correct answer for video 1
+            v2: "a1", // Correct answer for video 2
+            v3: "a2", // Correct answer for video 3
         };
 
         // Retrieve stored selections from Quiz 9 (sessionStorage)
@@ -354,5 +369,4 @@ $(document).ready(function () {
         // Display the total score
         $("#final-score").text(accPoints);
     }
-
 });

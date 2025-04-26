@@ -269,3 +269,8 @@ p {
     color: red;
     font-weight: bold;
 }
+
+.small {
+    font-size: 0.8em;
+    color: lightgray;
+}
