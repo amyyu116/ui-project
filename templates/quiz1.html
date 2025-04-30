@@ -109,6 +109,13 @@
     </div>
 
     <script src="{{ url_for('static', filename='quiz.js') }}"></script>
+
+    <!-- <script>
+        const params = new URLSearchParams(window.location.search);
+        if (params.get("reset") === "true") {
+            sessionStorage.clear();
+        }
+      </script> -->
 </body>
 
 {% endblock %}

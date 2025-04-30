@@ -22,7 +22,7 @@
 
         .video-box iframe {
             width: 300px;
-            height: 170px;
+            height: auto;
             border: 2px solid #ddd;
             border-radius: 8px;
         }
@@ -36,7 +36,8 @@
         }
 
         .row-video-answer {
-            margin-bottom: 2rem;
+            height: auto;
+            /* margin-bottom: 2rem; */
             width: 100%; /* Ensure it's taking full width */
             display: flex;
             justify-content: center;
@@ -63,6 +64,12 @@
             font-weight: bold;
         }
 
+        .answer-display {
+            margin: 5px 5;
+            padding: 5px;
+            border-radius: 4px;
+        }
+
         #result {
             font-size: 1.5rem;
             margin-top: 20px;
@@ -85,7 +92,10 @@
                 <div class="video-box" data-id="v1">
                     <iframe src="https://drive.google.com/file/d/1p5zPOhZpRQ5ZbeOoOSRlnt4ifKD00NqH/preview" allow="autoplay"></iframe>
                 </div>
-                <p>Correct answer: <span id="correct-answer-v1" class="answer correct-answer-v1">I–V–vi–IV</span></p>
+                <div class="answer-display">
+                    <p>Your answer: <span id="user-answer-v1" class="answer"></span></p>
+                    <p>Correct answer: <span id="correct-answer-v1" class="answer correct">I–V–vi–IV</span></p>
+                </div>
             </div>
         </div>
 
@@ -95,7 +105,10 @@
                 <div class="video-box" data-id="v2">
                     <iframe src="https://drive.google.com/file/d/196xwgyGOigj2DBFBCigXE4dtV1NYnZm4/preview" allow="autoplay"></iframe>
                 </div>
-                <p>Correct answer: <span id="correct-answer-v2" class="answer correct-answer-v2">I–V–vi–III–IV</span></p>
+                <div class="answer-display">
+                    <p>Your answer: <span id="user-answer-v2" class="answer"></span></p>
+                    <p>Correct answer: <span id="correct-answer-v2" class="answer correct">I–V–vi–III–IV</span></p>
+                </div>
             </div>
         </div>
 
@@ -105,7 +118,10 @@
                 <div class="video-box" data-id="v3">
                     <iframe src="https://drive.google.com/file/d/1q7HH34g1BYuIGt7Ebeu8lEsMLwfj8bbF/preview" allow="autoplay"></iframe>
                 </div>
-                <p>Correct answer: <span id="correct-answer-v3" class="answer correct-answer-v3">ii–V–I</span></p>
+                <div class="answer-display">
+                    <p>Your answer: <span id="user-answer-v3" class="answer"></span></p>
+                    <p>Correct answer: <span id="correct-answer-v3" class="answer correct">ii–V–I</span></p>
+                </div>
             </div>
         </div>
     </div>

@@ -1,71 +1,129 @@
 $(document).ready(function () {
-    let accPoints = 0;
+    if (window.location.search.includes("restart=true")) {
+        sessionStorage.clear();
+        sessionStorage.setItem("quizPoints", "0");
+        console.log("Session cleared.")
+        $.ajax({
+            url: '/restart-quiz',
+            method: 'GET',
+            success: function () {
+                window.location.href = "/quiz/1";
+            }
+        });
+        return;
+    }
 
-    let selections = {
-        sound: null,
-        case: null,
-    };
+    let accPoints = parseInt(sessionStorage.getItem("quizPoints") || "0");
+
+    function saveAnswers(page, answers, points = null) {
+        if (points !== null) {
+            sessionStorage.setItem("quizPoints", points.toString());
+        }
+        $.ajax({
+            url: '/save-response',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                page: page,
+                answers: answers,
+                accPoints: points || accPoints
+            }),
+            success: function (response) {
+                console.log('Saved successfully:', response);
+            },
+            error: function (error) {
+                console.error('Error saving:', error);
+            }
+        });
+    }
+
+    function highlight(selections) {
+        $(".btn-option[data-correct=true]").addClass("correct");
+
+        // let points = 0;
+
+        for (let group in selections) {
+            if (selections[group]) {
+                let { id, isCorrect } = selections[group];
+                let $btn = $(`#${id}`);
+                if (isCorrect === false || isCorrect === "false") {
+                    $btn.addClass("incorrect");
+                } else {
+                    $btn.addClass("correct");
+                    // points += 1;
+                }
+            }
+        }
+
+        // return points;
+    }
 
     // --- QUIZ 1 ---
-    $(".btn-option").click(function () {
-        let $this = $(this);
-        let group = $this.data("group");
-        let isCorrect = $this.data("correct");
-
-        selections[group] = {
-            id: $this.attr("id"),
-            isCorrect: isCorrect,
+    if (window.location.pathname.includes("/quiz/1")) {
+        let selections = {
+            sound: null,
+            case: null,
         };
 
-        // Deselect others in the group
-        $(`.btn-option[data-group=${group}]`).removeClass("selected");
-        $this.addClass("selected");
-
-        // Save to sessionStorage
-        sessionStorage.setItem("quiz1Selections", JSON.stringify(selections));
-
-        // Enable Next if both answered
-        if (selections.sound && selections.case) {
-            $("#next-button").prop("disabled", false);
-        }
-    });
-
-    if (window.location.pathname.includes("/quiz/1")) {
         let stored = sessionStorage.getItem("quiz1Selections");
         if (stored) {
-            let parsed = JSON.parse(stored);
-            for (let group in parsed) {
-                let { id } = parsed[group];
-                $(`#${id}`).addClass("selected");
+            selections = JSON.parse(stored);
+            for (let group in selections) {
+                if (selections[group] && selections[group].id) {
+                    $(`#${selections[group].id}`).addClass("selected");
+                }
             }
-
             // Enable next button if both are answered
-            if (parsed.sound && parsed.case) {
+            if (selections.sound && selections.case) {
                 $("#next-button").prop("disabled", false);
             }
         }
+
+        $(".btn-option").click(function () {
+            let $this = $(this);
+            let group = $this.data("group");
+            let isCorrect = $this.data("correct");
+
+            selections[group] = {
+                id: $this.attr("id"),
+                isCorrect: isCorrect,
+            };
+
+            // Deselect others in the group
+            $(`.btn-option[data-group=${group}]`).removeClass("selected");
+            $this.addClass("selected");
+
+            // Save to sessionStorage
+            sessionStorage.setItem("quiz1Selections", JSON.stringify(selections));
+            saveAnswers("1", selections);
+            // Enable Next if both answered
+            if (selections.sound && selections.case) {
+                $("#next-button").prop("disabled", false);
+            }
+        });
     }
 
     // --- QUIZ 2 ---
     if (window.location.pathname.includes("/quiz/2")) {
         $("#next-button").prop("disabled", false); // Always enabled
-
-        // Load selections
+        // accPoints = parseInt(sessionStorage.getItem("quizPoints") || "0");
+        // // Load selections
         let stored = sessionStorage.getItem("quiz1Selections");
         if (stored) {
             let parsed = JSON.parse(stored);
+            highlight(parsed);
 
-            // Highlight correct answers
-            $(".btn-option[data-correct=true]").addClass("correct");
-
-            for (let group in parsed) {
-                let { id, isCorrect } = parsed[group];
-                let $btn = $(`#${id}`);
-                if (isCorrect === false || isCorrect === "false") {
-                    $btn.addClass("incorrect");
-                } else {
-                    accPoints += 1;
+            if (!sessionStorage.getItem("quiz2Scored")) {
+                let points = 0;
+                for (let group in parsed) {
+                    if (parsed[group].isCorrect === true || parsed[group].isCorrect === "true") {
+                        points += 1;
+                    }
                 }
+                accPoints += points;
+                sessionStorage.setItem("quizPoints", accPoints.toString());
+                sessionStorage.setItem("quiz2Scored", "true");
+                saveAnswers("2", parsed, accPoints);
             }
         }
     }
@@ -93,6 +151,7 @@ $(document).ready(function () {
                 "quiz3Selections",
                 JSON.stringify(quiz3Selections)
             );
+            saveAnswers("3", quiz3Selections);
 
             // Enable Next after one selection (since it's one question)
             $("#next-button").prop("disabled", false);
@@ -113,31 +172,30 @@ $(document).ready(function () {
     // --- QUIZ 4 ---
     if (window.location.pathname.includes("/quiz/4")) {
         $("#next-button").prop("disabled", false); // Always enabled
+        // accPoints = parseInt(sessionStorage.getItem("quizPoints") || "0");
 
         let stored = sessionStorage.getItem("quiz3Selections");
-        let quizPoints = parseInt(sessionStorage.getItem("quizPoints") || "0");
-
+        // let quizPoints = parseInt(sessionStorage.getItem("quizPoints") || "0");
         // Always highlight the correct answer(s)
-        $(".btn-option[data-correct=true]").addClass("correct");
+        // $(".btn-option[data-correct=true]").addClass("correct");
+
 
         if (stored) {
             let parsed = JSON.parse(stored);
-            for (let group in parsed) {
-                let { id, isCorrect } = parsed[group];
-                let $btn = $(`#${id}`);
+            highlight(parsed);
 
-                if (isCorrect === false || isCorrect === "false") {
-                    $btn.addClass("incorrect");
-                } else if (isCorrect === true || isCorrect === "true") {
-                    // Only increment if not already done
-                    accPoints += 1;
+            if (!sessionStorage.getItem("quiz4Scored")) {
+                let points = 0;
+                for (let group in parsed) {
+                    if (parsed[group].isCorrect === true || parsed[group].isCorrect === "true") {
+                        points += 1;
+                    }
                 }
+                accPoints += points;
+                sessionStorage.setItem("quizPoints", accPoints.toString());
+                sessionStorage.setItem("quiz4Scored", "true");
+                saveAnswers("4", parsed, accPoints);
             }
-        }
-
-        if (!sessionStorage.getItem("quiz4Scored")) {
-            sessionStorage.setItem("quizPoints", quizPoints.toString());
-            sessionStorage.setItem("quiz4Scored", "true");
         }
     }
 
@@ -164,21 +222,19 @@ $(document).ready(function () {
                 "quiz5Selections",
                 JSON.stringify(quiz5Selections)
             );
+            saveAnswers("5", quiz5Selections);
 
             // Enable Next after one selection (since it's one question)
             $("#next-button").prop("disabled", false);
         });
 
-        // Restore previous selection if returning to this page
-        if (window.location.pathname.includes("/quiz/5")) {
-            let stored = sessionStorage.getItem("quiz5Selections");
-            if (stored) {
-                let parsed = JSON.parse(stored);
-                for (let group in parsed) {
-                    let { id } = parsed[group];
-                    $(`#${id}`).addClass("selected");
-                }
+        let stored = sessionStorage.getItem("quiz5Selections");
+        if (stored) {
+            let parsed = JSON.parse(stored);
+            for (let group in parsed) {
+                $(`#${parsed[group].id}`).addClass("selected");
             }
+            $("#next-button").prop("disabled", false);
         }
     }
 
@@ -187,24 +243,28 @@ $(document).ready(function () {
     if (window.location.pathname.includes("/quiz/6")) {
         $("#next-button").prop("disabled", false); // Always enabled
 
+        // accPoints = parseInt(sessionStorage.getItem("quizPoints") || "0");
         let stored = sessionStorage.getItem("quiz5Selections");
-        let quizPoints = parseInt(sessionStorage.getItem("quizPoints") || "0");
+        // let quizPoints = parseInt(sessionStorage.getItem("quizPoints") || "0");
 
         // Always highlight the correct answer(s)
-        $(".btn-option[data-correct=true]").addClass("correct");
+        // $(".btn-option[data-correct=true]").addClass("correct");
 
         if (stored) {
             let parsed = JSON.parse(stored);
-            for (let group in parsed) {
-                let { id, isCorrect } = parsed[group];
-                let $btn = $(`#${id}`);
+            highlight(parsed);
 
-                if (isCorrect === false || isCorrect === "false") {
-                    $btn.addClass("incorrect");
-                } else if (isCorrect === true || isCorrect === "true") {
-                    // Only increment if not already done
-                    accPoints += 1;
+            if (!sessionStorage.getItem("quiz6Scored")) {
+                let points = 0;
+                for (let group in parsed) {
+                    if (parsed[group].isCorrect === true || parsed[group].isCorrect === "true") {
+                        points += 1;
+                    }
                 }
+                accPoints += points;
+                sessionStorage.setItem("quizPoints", accPoints.toString());
+                sessionStorage.setItem("quiz6Scored", "true");
+                saveAnswers("6", parsed, accPoints);
             }
         }
     }
@@ -232,21 +292,19 @@ $(document).ready(function () {
                 "quiz7Selections",
                 JSON.stringify(quiz7Selections)
             );
+            saveAnswers("7", quiz7Selections);
 
             // Enable Next after one selection (since it's one question)
             $("#next-button").prop("disabled", false);
         });
 
-        // Restore previous selection if returning to this page
-        if (window.location.pathname.includes("/quiz/7")) {
-            let stored = sessionStorage.getItem("quiz7Selections");
-            if (stored) {
-                let parsed = JSON.parse(stored);
-                for (let group in parsed) {
-                    let { id } = parsed[group];
-                    $(`#${id}`).addClass("selected");
-                }
+        let stored = sessionStorage.getItem("quiz7Selections");
+        if (stored) {
+            let parsed = JSON.parse(stored);
+            for (let group in parsed) {
+                $(`#${parsed[group].id}`).addClass("selected");
             }
+            $("#next-button").prop("disabled", false);
         }
     }
 
@@ -254,25 +312,28 @@ $(document).ready(function () {
 
     if (window.location.pathname.includes("/quiz/8")) {
         $("#next-button").prop("disabled", false); // Always enabled
-
+        // accPoints = parseInt(sessionStorage.getItem("quizPoints") || "0");
         let stored = sessionStorage.getItem("quiz7Selections");
-        let quizPoints = parseInt(sessionStorage.getItem("quizPoints") || "0");
+        // let quizPoints = parseInt(sessionStorage.getItem("quizPoints") || "0");
 
         // Always highlight the correct answer(s)
         $(".btn-option[data-correct=true]").addClass("correct");
 
         if (stored) {
             let parsed = JSON.parse(stored);
-            for (let group in parsed) {
-                let { id, isCorrect } = parsed[group];
-                let $btn = $(`#${id}`);
+            highlight(parsed);
 
-                if (isCorrect === false || isCorrect === "false") {
-                    $btn.addClass("incorrect");
-                } else if (isCorrect === true || isCorrect === "true") {
-                    // Only increment if not already done
-                    accPoints += 1;
+            if (!sessionStorage.getItem("quiz8Scored")) {
+                let points = 0;
+                for (let group in parsed) {
+                    if (parsed[group].isCorrect === true || parsed[group].isCorrect === "true") {
+                        points += 1;
+                    }
                 }
+                accPoints += points;
+                sessionStorage.setItem("quizPoints", accPoints.toString());
+                sessionStorage.setItem("quiz8Scored", "true");
+                saveAnswers("8", parsed, accPoints);
             }
         }
     }
@@ -283,9 +344,9 @@ $(document).ready(function () {
 
         // Correct answers for Quiz 9 (matching the options in the <select> element)
         const correctAnswers = {
-            v1: "a3", // First video correct answer
-            v2: "a1", // Second video correct answer
-            v3: "a2", // Third video correct answer
+            v1: "I–V–vi–IV", // First video correct answer
+            v2: "I–V–vi–iii-IV", // Second video correct answer
+            v3: "ii–V–I" // Third video correct answer
         };
 
         // When an answer is selected
@@ -307,56 +368,57 @@ $(document).ready(function () {
                 "quiz9Selections",
                 JSON.stringify(quiz9Selections)
             );
+            saveAnswers("9", quiz9Selections);
 
             // Update the "Your answer:" display for the current video
             $(`.user-answer-${videoId}`).text(selectedAnswer); // This updates the user's answer display
         });
 
-        // Restore previous selections if returning to this page
-        let storedQuiz9Selections = sessionStorage.getItem("quiz9Selections");
-        if (storedQuiz9Selections) {
-            let parsed = JSON.parse(storedQuiz9Selections);
-            for (let videoId in parsed) {
-                // Restore the selected value in the dropdown
-                $(`.match-select[data-video-id=${videoId}]`).val(
-                    parsed[videoId]
-                );
-
-                // Update the "Your answer:" display
-                $(`.user-answer-${videoId}`).text(parsed[videoId]);
+        let stored = sessionStorage.getItem("quiz9Selections");
+        if (stored) {
+            let parsed = JSON.parse(stored);
+            for (let id in parsed) {
+                $(`.match-select[data-video-id=${id}]`).val(parsed[id]);
+                $(`.user-answer-${id}`).text(parsed[id]);
             }
+            $("#next-button").prop("disabled", false);
         }
     }
     // --- QUIZ 10 ---
     if (window.location.pathname.includes("/quiz/10")) {
+        $("#next-button").prop("disabled", false);
+        // accPoints = parseInt(sessionStorage.getItem("quizPoints") || "0");
         // Correct answers for Quiz 10 (for reference)
         const correctAnswers = {
-            v1: "a3", // Correct answer for video 1
-            v2: "a1", // Correct answer for video 2
-            v3: "a2", // Correct answer for video 3
+            v1: "I–V–vi–IV",
+            v2: "I–V–vi–iii-IV",
+            v3: "ii–V–I"
         };
 
         // Retrieve stored selections from Quiz 9 (sessionStorage)
-        let storedQuiz9Selections = sessionStorage.getItem("quiz9Selections");
+        let stored = sessionStorage.getItem("quiz9Selections");
 
-        if (storedQuiz9Selections) {
-            // Parse the stored selections (Quiz 9 answers)
-            let parsedSelections = JSON.parse(storedQuiz9Selections);
+        if (stored) {
+            let parsed = JSON.parse(stored);
+            let points = 0;
+            for (let id in parsed) {
+                let userAnswer = parsed[id];
+                let isCorrect = userAnswer === correctAnswers[id];
 
-            // Loop through all stored answers
-            for (let videoId in parsedSelections) {
-                let userAnswer = parsedSelections[videoId];
-                let correctAnswer = correctAnswers[videoId];
+                $(`#user-answer-${id}`).text(userAnswer)
+                    .addClass(isCorrect ? "correct" : "incorrect");
+                $(`#correct-answer-${id}`).text(correctAnswers[id])
+                    .addClass("correct");
 
-                // Get the element where we will show the correct answer
-                let correctAnswerElement = $(`#correct-answer-${videoId}`);
-
-                // If the user's answer is correct, color the correct answer green, else red
-                if (userAnswer === correctAnswer) {
-                    correctAnswerElement.addClass("correct"); // Green for correct
-                } else {
-                    correctAnswerElement.addClass("incorrect"); // Red for incorrect
+                if (!sessionStorage.getItem("quiz10Scored") && isCorrect) {
+                    points += 1;
                 }
+            }
+            if (!sessionStorage.getItem("quiz10Scored")) {
+                accPoints += points;
+                sessionStorage.setItem("quizPoints", accPoints.toString());
+                sessionStorage.setItem("quiz10Scored", "true");
+                saveAnswers("10", parsed, accPoints);
             }
         }
     }
@@ -364,9 +426,17 @@ $(document).ready(function () {
     // --- QUIZ 11 ---
     if (window.location.pathname.includes("/quiz/11")) {
         // Retrieve the total score from sessionStorage
-        let accPoints = parseInt(sessionStorage.getItem("accPoints") || "0");
+        let finalScore = accPoints;
 
         // Display the total score
-        $("#final-score").text(accPoints);
+        $("#final-score").text(finalScore);
+
+        $("#restart-button").click(function () {
+            sessionStorage.clear();
+            window.location.href = "/restart-quiz";
+        });
+
+        saveAnswers("11", {}, finalScore);
+
     }
 });

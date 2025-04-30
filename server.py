@@ -1,12 +1,13 @@
 from flask import Flask
 from flask import render_template
-from flask import Response, request, jsonify
+from flask import Response, request, jsonify, session, redirect, url_for
 import json
 import re
-from datetime import datetime
+from datetime import datetime, timezone
 import uuid
 
 app = Flask(__name__)
+app.secret_key = "quiz_key"
 id = str(uuid.uuid4())[:8]
 filename = f"user{id}_log.json"
 chord_names = {
@@ -27,6 +28,7 @@ def log(message):
 # ROUTES
 @app.route('/')
 def welcome():
+    session.clear()
     return render_template("welcome.html")   
 
 @app.route('/learn/<int:page_num>')
@@ -61,6 +63,44 @@ def log_chord():
     log(f"chord: {chord_names[chord]} ({chord}), timestamp: {timestamp}")
 
     return jsonify({"status": "success"})
+
+@app.route('/save-response', methods=['POST'])
+def save_response():
+    data = request.get_json()
+    page = str(data.get("page"))
+    answers = data.get("answers")
+    accPoints = data.get("accPoints")
+
+    if "answers" not in session:
+        session["answers"] = {}
+    session["answers"][page] = answers
+    
+    if accPoints is not None:
+       session["accPoints"] = accPoints
+
+    session.modified = True
+    log_per_question = {
+            "page": page,
+            "answers": answers,
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "accPoints" : accPoints
+        }
+
+    log(log_per_question)
+    
+    return jsonify({"status": "success"})
+
+@app.route('/restart-quiz', methods=['GET'])
+def restart_quiz():
+    session.clear()
+    return redirect('/quiz/1')
+
+@app.route('/quiz/11')
+def render_results():
+    score = session.get("accPoints")
+    # if score is None:
+    #     return redirect(url_for('render_quiz', page_num=1))
+    return render_template("quiz11.html", score=score)
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
