@@ -1,3 +1,8 @@
+* {
+    font-family: 'Lora', serif;
+    color: #434343;
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -25,8 +30,16 @@ p {
     margin-bottom: 30px;
 }
 
+.bold {
+    font-weight: bold;
+}
+
+.subtitle {
+    color: #b7b7b7;
+}
+
 .start-button {
-    background-color: #3399ff;
+    background-color: #1c4587;
     color: white;
     padding: 15px 30px;
     text-decoration: none;
@@ -36,7 +49,8 @@ p {
 }
 
 .start-button:hover {
-    background-color: #267acc;
+    color: white;
+    background-color: #122b54;
 }
 
 /* Existing styles ... */
@@ -45,7 +59,7 @@ p {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #3399ff;
+    background-color: #1c4587;
     padding: 10px 20px;
     color: white;
 }
@@ -189,14 +203,14 @@ p {
 }
 
 .audio-button:hover {
-    color: #3399ff;
+    color: #1c4587;
 }
 
 .side-note {
     font-size: 1em;
     background-color: #e6f4ff;
     padding: 20px;
-    border-left: 5px solid #3399ff;
+    border-left: 5px solid #1c4587;
     border-radius: 6px;
     color: #003366;
 }
