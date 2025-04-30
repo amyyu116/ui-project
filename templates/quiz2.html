@@ -1,83 +1,109 @@
 {% extends "navbar.html" %}
-{% block title %}Question 1 Answer{% endblock %}
-
+{% block title %}Question 2{% endblock %}
 {% block content %}
+
+<!-- keep all your styles exactly the same -->
 <head>
-    <style>
-        body.quiz .container {
-            display: block;
-            flex-direction: center;
-            justify-content: center;
-            align-items: center;
-            height: auto;
-            text-align: initial;
-            width: 100%;
-            padding-right: 15px;
-            padding-left: 15px;
-            margin-right: auto;
-            margin-left: auto;
-        }
-
-        .btn-option {
-            width: 100%;
-            padding-top: 1rem;
-            padding-bottom: 1rem;
-            margin-bottom: 0.5rem;
-            font-size: 1.1rem;
-            background-color: white;
-            border: 2px solid #ddd; /* Set the initial border color */
-            transition: all 0.3s ease; /* Smooth transition for color change */
-        }
-
-        body.quiz h4 {
-            font-weight: normal;
-        }
-
-        .btn-option.correct {
-            background-color: green !important;
-            color: white !important;
-            border-color: green !important;
-        }
-
-        .btn-option.incorrect {
-            background-color: red !important;
-            color: white !important;
-            border-color: red !important;
-        }
-    </style>
+  <style>
+      body.quiz .container{display:block;flex-direction:center;justify-content:center;align-items:center;height:auto;text-align:initial;width:100%;padding-right:15px;padding-left:15px;margin-right:auto;margin-left:auto}
+      .btn-option{width:100%;padding-top:1rem;padding-bottom:1rem;margin-bottom:.5rem;font-size:1.1rem;background-color:#fff}
+      body.quiz h4{font-weight:normal}
+      .btn-option.selected{background-color:#000!important;color:#fff!important;border-color:#000!important}
+      .btn-option.correct{background-color:#28a745!important;color:#fff!important;border-color:#28a745!important}
+      .btn-option.incorrect{background-color:#dc3545!important;color:#fff!important;border-color:#dc3545!important}
+  </style>
 </head>
 
 <body class="quiz">
-    <div class="tutorial-container">
-        <h1>Question 1: Answer</h1>
-        <p>Correct answers highlighted below.</p>
-    </div>
 
-    <div class="container">
-        <div class="row justify-content-center" style="text-align: center;">
-            <div class="col-md-3">
-                <h4>Associated Sound</h4>
-                <button class="btn btn-option sound" id="happy" data-correct="true">Happy/Bright</button>
-                <button class="btn btn-option sound" id="melancholy" data-correct="false">Melancholic/Sad</button>
+<div class="tutorial-container">
+    <h1>Question 2</h1>
+    <p>Current score: <strong id="score-display">{{ score }}</strong></p>
+    <p>How are chords in a major scale ordered?</p>
+</div>
+
+<div class="container">
+    <div class="row justify-content-center" style="text-align:center;">
+        <div class="col-md-4"></div>
+
+        <div class="col-md-4">
+            <!-- one-click (single-group) question -->
+            <div class="row justify-content-center mb-2">
+                <button type="button" class="btn btn-outline-dark btn-option majorq"
+                        data-group="major-chords" data-correct="true"  id="q2opt1">
+                    I-ii-iii-IV-V-vi-viiº
+                </button>
             </div>
 
-            <div class="col-md-2"></div>
+            <div class="row justify-content-center mb-2">
+                <button type="button" class="btn btn-outline-dark btn-option majorq"
+                        data-group="major-chords" data-correct="false" id="q2opt2">
+                    I-ii°-iii-iv-V-VI-vii
+                </button>
+            </div>
 
-            <div class="col-md-3">
-                <h4>Lowercase/Uppercase</h4>
-                <button class="btn btn-option case" id="lowercase" data-correct="false">Lowercase</button>
-                <button class="btn btn-option case" id="uppercase" data-correct="true">Uppercase</button>
+            <div class="row mb-2">
+                <button type="button" class="btn btn-outline-dark btn-option majorq"
+                        data-group="major-chords" data-correct="false" id="q2opt3">
+                    i-ii-III-iv-v-VI-VII
+                </button>
+            </div>
+
+            <div class="row mb-2">
+                <button type="button" class="btn btn-outline-dark btn-option majorq"
+                        data-group="major-chords" data-correct="false" id="q2opt4">
+                    I-II-iii-iv°-V-vi-vii
+                </button>
             </div>
         </div>
-    </div>
 
-    <br>
+        <div class="col-md-4"></div>
+    </div>
 
     <div class="navigation-buttons">
         <a href="/quiz/1"><button>Back</button></a>
-        <span>2/10</span>
+        <span>2/5</span>
         <a href="/quiz/3"><button id="next-button" disabled>Next</button></a>
     </div>
-    <script src="{{ url_for('static', filename='quiz.js') }}"></script>
+</div>
+
+<!-- ----------  scoring glue (single-answer page)  ---------- -->
+<script>
+let alreadyScored = false;   // prevent multiple increments
+
+document.querySelectorAll('.btn-option').forEach(btn => {
+    btn.addEventListener('click', () => {
+        /* visual selection */
+        document.querySelectorAll('.btn-option').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+
+        /* correctness colouring */
+        if (btn.dataset.correct === "true") {
+            btn.classList.add('correct');
+        } else {
+            btn.classList.add('incorrect');
+        }
+
+        /* only award points on the 1st correct attempt */
+        if (btn.dataset.correct === "true" && !alreadyScored) {
+            alreadyScored = true;
+            fetch("/update-score", {
+                method: "POST",
+                headers: {"Content-Type":"application/json"},
+                body: JSON.stringify({increment:1})
+            })
+            .then(r => r.json())
+            .then(data => {
+                document.getElementById("score-display").textContent = data.score;
+            })
+            .catch(err => console.error("score update failed", err));
+        }
+
+        /* enable “Next” button regardless of correctness */
+        document.getElementById("next-button").disabled = false;
+    });
+});
+</script>
+
 </body>
 {% endblock %}

@@ -1,45 +1,74 @@
-from flask import Flask
-from flask import render_template
-from flask import Response, request, jsonify, session, redirect, url_for
-import json
-import re
+from flask import Flask, render_template, request, jsonify, session, redirect
+import json, uuid
 from datetime import datetime, timezone
-import uuid
 
 app = Flask(__name__)
 app.secret_key = "quiz_key"
-id = str(uuid.uuid4())[:8]
-filename = f"user{id}_log.json"
-chord_names = {
-    "i_chord": "C Major",
-    "ii_chord": "d minor",
-    "iii_chord": "e minor",
-    "iv_chord": "F Major",
-    "v_chord": "G Major",
-    "vi_chord": "a minor",
-    "vii_chord": "b diminished"
-}
 
-def log(message):
-    global filename
+
+score = 0 
+
+# if we allow for multiple users, we store the score in a hashmap to userID instead
+# can update this next week if needed
+ 
+id        = str(uuid.uuid4())[:8]
+filename  = f"user{id}_log.json"
+chord_names = { ... }                        
+def log(msg):
     with open(filename, "a") as f:
-        f.write(json.dumps(message) + "\n")
-        
-# ROUTES
+        f.write(json.dumps(msg) + "\n")
+
 @app.route('/')
 def welcome():
     session.clear()
-    return render_template("welcome.html")   
-
-@app.route('/learn/<int:page_num>')
-def render_tutorial(page_num):
-    total_pages = 10
-    return render_template(f"learn{page_num}.html", page_num=page_num, total_pages=total_pages)
+    return render_template("welcome.html")
 
 @app.route('/quiz/<int:page_num>')
 def render_quiz(page_num):
-    total_pages = 10
-    return render_template(f"quiz{page_num}.html", page_num=page_num, total_pages=total_pages)
+    global score
+    total_pages = 5
+    return render_template(f"quiz{page_num}.html",
+                           page_num=page_num,
+                           total_pages=total_pages,
+                           score=score)         
+@app.route('/update-score', methods=['POST'])
+def update_score():
+    """
+    Body: {"increment": 1}
+    Returns: {"score": 1, "status": "ok"}
+    """
+    global score
+    inc = request.get_json().get("increment", 0)
+    score += int(inc)
+    return jsonify({"score": score, "status": "ok"})
+
+@app.route('/restart-quiz')
+def restart_quiz():
+    global score
+    score = 0               
+    session.clear()
+    return redirect('/quiz/1')
+
+@app.route('/quiz/1')
+def render_quiz_question_one():
+    global score
+    score = 0               
+    session.clear()
+    total_pages = 5
+    return render_template(f"quiz1.html",
+                           page_num=1,
+                           total_pages=total_pages,
+                           score=score) 
+
+@app.route('/quiz/11')
+def render_results():
+    global score
+    return render_template("quiz11.html", score=score)
+
+@app.route('/learn/<int:page_num>')
+def render_tutorial(page_num):
+    total_pages = 9
+    return render_template(f"learn{page_num}.html", page_num=page_num, total_pages=total_pages)
 
 @app.route('/log-entry-time', methods=['POST'])
 def log_entry_time():
@@ -90,17 +119,6 @@ def save_response():
     
     return jsonify({"status": "success"})
 
-@app.route('/restart-quiz', methods=['GET'])
-def restart_quiz():
-    session.clear()
-    return redirect('/quiz/1')
-
-@app.route('/quiz/11')
-def render_results():
-    score = session.get("accPoints")
-    # if score is None:
-    #     return redirect(url_for('render_quiz', page_num=1))
-    return render_template("quiz11.html", score=score)
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
