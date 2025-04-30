@@ -1,95 +1,132 @@
 {% extends "navbar.html" %}
-{% block title %}Question 3{% endblock %}
-
+{% block title %}Question 5{% endblock %}
 {% block content %}
+
 <head>
-    <style>
-        body.quiz .container {
-            display: block;
-            flex-direction: center;
-            justify-content: center;
-            align-items:center;
-            height: auto;
-            text-align: initial;
-            width: 100%;
-            padding-right: 15px;
-            padding-left: 15px;
-            margin-right: auto;
-            margin-left: auto;
-        }
-
-        .btn-option {
-            width: 100%;
-            padding-top: 1rem;
-            padding-bottom: 1rem;
-            margin-bottom: 0.5rem;
-            font-size: 1.1rem; /* Optional: make text a bit bigger */
-            background-color: white;
-        }
-
-        body.quiz h4 {
-            font-weight: normal;
-        }
-
-        .btn-option.selected {
-            background-color: black !important;
-            color: white !important;
-            border-color: black !important;
-        }
-
-        .btn-option.correct {
-            background-color: #28a745 !important; /* green */
-            color: white !important;
-            border-color: #28a745 !important;
-        }
-
-        .btn-option.incorrect {
-            background-color: #dc3545 !important; /* red */
-            color: white !important;
-            border-color: #dc3545 !important;
-        }
-
-    </style>
+  <style>
+      body.quiz .container{display:flex;flex-direction:column;align-items:center;padding:20px}
+      /* answer bank */
+      #answer-bank{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;margin-bottom:1.5rem}
+      .answer-card{padding:.5rem 1rem;border:1px solid #333;border-radius:6px;cursor:grab;background:#fff;font-weight:500;text-align:center;min-width:120px}
+      .answer-card.correct{background:#28a745!important;color:#fff!important;border-color:#28a745!important}
+      .answer-card.incorrect{background:#dc3545!important;color:#fff!important;border-color:#dc3545!important}
+      /* videos row */
+      .videos-row{display:flex;gap:2rem;flex-wrap:wrap;justify-content:center}
+      .video-col{display:flex;flex-direction:column;align-items:center}
+      .video-box iframe{width:300px;height:auto;border:2px solid #ddd;border-radius:8px}
+      .drop-zone{width:220px;height:42px;margin-top:.5rem;border:2px dashed #666;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.9rem;color:#666}
+      .drop-zone.filled{border-style:solid}
+      .navigation-buttons{text-align:center;margin-top:40px}
+  </style>
 </head>
 
 <body class="quiz">
 
-    <div class="tutorial-container">
-        <h1>Question 3</h1>
-        <p>What is the “I–V–vi-IV” chord progression known for?</p>
+<div class="tutorial-container">
+    <h1>Question 5</h1>
+    <p>Current score: <strong id="score-display">{{ score }}</strong></p>
+    <p>Drag each progression to the video it matches.</p>
+</div>
+
+<!-- answer bank (horizontal) -->
+<div id="answer-bank">
+    <div class="answer-card" id="a1" draggable="true">I–V–vi–IV</div>
+    <div class="answer-card" id="a2" draggable="true">I–V–vi–iii–IV</div>
+    <div class="answer-card" id="a3" draggable="true">ii–V–I</div>
+</div>
+
+<!-- videos laid out in a single row -->
+<div class="videos-row">
+    <!-- v1 -->
+    <div class="video-col">
+        <div class="video-box"><iframe src="https://drive.google.com/file/d/1p5zPOhZpRQ5ZbeOoOSRlnt4ifKD00NqH/preview" allow="autoplay"></iframe></div>
+        <div class="drop-zone" data-video-id="v1">drop here</div>
     </div>
-
-    <div class="container">
-        <div class="row justify-content-center" style="text-align: center;">
-            <div class="col-md-4"></div>
-
-            <div class="col-md-4">
-                <div class="row justify-content-center mb-2">
-                    <button type="button" class="btn btn-outline-dark btn-option" data-group="chord-prog" data-correct="false" id="q3opt1">Being named after Pachelbel's Canon</button>
-                </div>
-
-                <div class="row justify-content-center mb-2">
-                    <button type="button" class="btn btn-outline-dark btn-option" data-group="chord-prog" data-correct="true" id="q3opt2">Its diversity across genres</button>
-                </div>
-
-                <div class="row  mb-2">
-                    <button type="button" class="btn btn-outline-dark btn-option" data-group="chord-prog" data-correct="false" id="q3opt3">Its use in modern day music</button>
-                </div>
-
-                <div class="row mb-2">
-                    <button type="button" class="btn btn-outline-dark btn-option" data-group="chord-prog" data-correct="false" id="q3opt4">Being easy to improvise off of</button>
-                </div>
-
-            </div>
-
-            <div class="col-md-4"></div>
-        </div>
-
-    <div class="navigation-buttons">
-        <a href="/quiz/4"><button>Back</button></a>
-        <span>5/10</span>
-        <a href="/quiz/6"><button id="next-button" disabled>Next</button></a>
+    <!-- v2 -->
+    <div class="video-col">
+        <div class="video-box"><iframe src="https://drive.google.com/file/d/196xwgyGOigj2DBFBCigXE4dtV1NYnZm4/preview" allow="autoplay"></iframe></div>
+        <div class="drop-zone" data-video-id="v2">drop here</div>
     </div>
-    <script src="{{ url_for('static', filename='quiz.js') }}"></script>
+    <!-- v3 -->
+    <div class="video-col">
+        <div class="video-box"><iframe src="https://drive.google.com/file/d/1q7HH34g1BYuIGt7Ebeu8lEsMLwfj8bbF/preview" allow="autoplay"></iframe></div>
+        <div class="drop-zone" data-video-id="v3">drop here</div>
+    </div>
+</div>
+
+<div class="navigation-buttons">
+    <a href="/quiz/4"><button>Back</button></a>
+    <span>5/5</span>
+    <a href="/quiz/11"><button id="next-button" disabled>Next</button></a>
+</div>
+
+<!-- ─── drag-and-drop / scoring logic (unchanged) ─────────────── -->
+<script>
+const correctMap   = { v1:'a1', v2:'a2', v3:'a3' };
+const placements   = {};
+let   alreadyScored = false;
+
+/* make answers draggable */
+document.querySelectorAll('.answer-card').forEach(card=>{
+    card.addEventListener('dragstart',e=>{
+        e.dataTransfer.setData('text/plain',card.id);
+    });
+});
+
+/* drop zones */
+document.querySelectorAll('.drop-zone').forEach(zone=>{
+    zone.addEventListener('dragover',e=>e.preventDefault());
+    zone.addEventListener('drop',e=>{
+        e.preventDefault();
+        const id=e.dataTransfer.getData('text/plain');
+        if(!id) return;
+        const card=document.getElementById(id);
+
+        /* return existing card */
+        if(zone.firstElementChild) document.getElementById('answer-bank').append(zone.firstElementChild);
+
+        zone.textContent=''; zone.appendChild(card); zone.classList.add('filled');
+        placements[zone.dataset.videoId]=id;
+        card.classList.remove('correct','incorrect');
+        evaluateIfDone();
+    });
+});
+
+/* allow cards back to bank */
+document.getElementById('answer-bank').addEventListener('dragover',e=>e.preventDefault());
+document.getElementById('answer-bank').addEventListener('drop',e=>{
+    e.preventDefault();
+    const id=e.dataTransfer.getData('text/plain');
+    if(!id) return;
+    const card=document.getElementById(id);
+    e.currentTarget.appendChild(card);
+    for(const v in placements) if(placements[v]===id) delete placements[v];
+    card.classList.remove('correct','incorrect');
+    document.querySelectorAll('.drop-zone').forEach(z=>{
+        if(!z.firstElementChild){z.textContent='drop here';z.classList.remove('filled');}
+    });
+    document.getElementById('next-button').disabled=true;
+});
+
+/* grade when all placed */
+function evaluateIfDone(){
+    if(Object.keys(placements).length!==3) return;
+    let allCorrect=true;
+    for(const v in placements){
+        const card=document.getElementById(placements[v]);
+        if(placements[v]===correctMap[v]){card.classList.add('correct');}
+        else{card.classList.add('incorrect');allCorrect=false;}
+    }
+    if(allCorrect && !alreadyScored){
+        alreadyScored=true;
+        fetch("/update-score",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({increment:1})})
+          .then(r=>r.json())
+          .then(d=>document.getElementById('score-display').textContent=d.score)
+          .catch(err=>console.error(err));
+    }
+    document.getElementById('next-button').disabled=false;
+}
+</script>
+
 </body>
 {% endblock %}
