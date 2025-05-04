@@ -8,32 +8,105 @@
     <!-- Lora font import -->
     <link href='https://fonts.googleapis.com/css?family=Lora' rel='stylesheet'>
 
-    <!-- Required JS and CSS for Piano Interaction -->
+    <!-- jQuery UI -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
     <script src="{{ url_for('static', filename='piano.js') }}"></script>
 
-    <!-- Optional Bootstrap (only if you’re using Bootstrap classes elsewhere) -->
+    <!-- Optional Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" />
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Lora', serif;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-left {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-item a {
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 1.05rem;
+            transition: color 0.3s;
+        }
+
+        .nav-item a:hover,
+        .nav-item.active a {
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        .progress-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            min-width: 180px;
+        }
+
+        progress {
+            width: 120px;
+            height: 12px;
+            appearance: none;
+        }
+
+        progress::-webkit-progress-bar {
+            background-color: #e9ecef;
+            border-radius: 5px;
+        }
+
+        progress::-webkit-progress-value {
+            background-color: #007bff;
+            border-radius: 5px;
+        }
+
+        progress::-moz-progress-bar {
+            background-color: #007bff;
+            border-radius: 5px;
+        }
+
+        .progress-font {
+            color: #ffffff;
+        }
+
+
+        .content {
+            padding: 2rem;
+        }
+    </style>
 </head>
-    
+
 <body>
     <nav class="navbar">
-        <div class="nav-item {% if request.path == '/' %}active{% endif %}">
-            <a href="/">Home</a>
-        </div>
-        <div class="nav-item {% if 'learn' in request.path %}active{% endif %}">
-            <a href="/learn/1">Tutorial</a>
-        </div>
-        <div class="nav-item {% if 'quiz' in request.path %}active{% endif %}">
-            <a href="/quiz/1?restart=true">Quiz</a>
+        <div class="nav-left">
+            <div class="nav-item {% if request.path == '/' %}active{% endif %}">
+                <a href="/">Home</a>
+            </div>
+            <div class="nav-item {% if 'learn' in request.path %}active{% endif %}">
+                <a href="/learn/1">Tutorial</a>
+            </div>
+            <div class="nav-item {% if 'quiz' in request.path %}active{% endif %}">
+                <a href="/quiz/1?restart=true">Quiz</a>
+            </div>
         </div>
 
         {% if 'learn' in request.path or 'quiz' in request.path %}
-            <div class="nav-item">
-                Page {{ page_num }} of {{ total_pages }}
-            </div>
+        <div class="progress-container">
+            <progress value="{{ page_num - 1 }}" max="{{ total_pages }}"></progress>
+            <span class = "progress-font">{{ ((page_num - 1)/ total_pages * 100) | round(0) }}%</span>
+        </div>
         {% endif %}
     </nav>
 
@@ -55,7 +128,5 @@
             });
         });
     </script>
-
 </body>
 </html>
-

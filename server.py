@@ -60,10 +60,10 @@ def render_quiz_question_one():
                            total_pages=total_pages,
                            score=score) 
 
-@app.route('/quiz/11')
+@app.route('/score_page')
 def render_results():
     global score
-    return render_template("quiz11.html", score=score)
+    return render_template("score_page.html", score=score)
 
 @app.route('/learn/<int:page_num>')
 def render_tutorial(page_num):
