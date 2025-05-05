@@ -1,12 +1,12 @@
-{% extends "navbar.html" %}
-{% block title %}Chords and Chord Qualities{% endblock %}
-{% block content %}
+{% extends "navbar.html" %} {% block title %}Chords and Chord Qualities{%
+endblock %} {% block content %}
 
 <div class="tutorial-container">
     <h1>Chords and Chord Qualities</h1>
     <p>
-        A <strong>chord</strong> is when you play three or more musical notes at the same time.
-        Depending on <strong>quality</strong> of the chords, they can sound happy, sad, tense, or relaxed.
+        A <strong>chord</strong> is when you play three or more musical notes at
+        the same time. Depending on <strong>quality</strong> of the chords, they
+        can sound happy, sad, tense, or relaxed.
     </p>
 
     <div class="content-grid">
@@ -22,28 +22,57 @@
                 <tr>
                     <td>Major</td>
                     <td>Happy or bright</td>
-                    <td><button class="audio-button" data-chord="c-major-chord.mp3">🔊</button></td>
+                    <td>
+                        <button
+                            class="audio-button"
+                            data-chord="c-major-chord.mp3"
+                        >
+                            🔊
+                        </button>
+                    </td>
                 </tr>
                 <tr>
                     <td>Minor</td>
                     <td>Sad or serious, melancholic</td>
-                    <td><button class="audio-button" data-chord="c-minor-chord.mp3">🔊</button></td>
+                    <td>
+                        <button
+                            class="audio-button"
+                            data-chord="c-minor-chord.mp3"
+                        >
+                            🔊
+                        </button>
+                    </td>
                 </tr>
                 <tr>
                     <td>Diminished</td>
                     <td>Tense or spooky</td>
-                    <td><button class="audio-button" data-chord="c-diminished-chord.mp3">🔊</button></td>
+                    <td>
+                        <button
+                            class="audio-button"
+                            data-chord="c-diminished-chord.mp3"
+                        >
+                            🔊
+                        </button>
+                    </td>
                 </tr>
                 <tr>
                     <td>Augmented</td>
                     <td>Unusual or dreamy</td>
-                    <td><button class="audio-button" data-chord="c-augmented-chord.mp3">🔊</button></td>
+                    <td>
+                        <button
+                            class="audio-button"
+                            data-chord="c-augmented-chord.mp3"
+                        >
+                            🔊
+                        </button>
+                    </td>
                 </tr>
             </tbody>
         </table>
 
         <div class="side-note">
-            In this tutorial, we will mainly discuss <strong>major</strong> and <strong>minor</strong> chords.
+            In this tutorial, we will mainly discuss <strong>major</strong> and
+            <strong>minor</strong> chords.
         </div>
     </div>
 
@@ -55,14 +84,14 @@
 </div>
 
 <script>
-document.querySelectorAll(".audio-button").forEach(button => {
-    button.addEventListener("click", () => {
-        const file = button.dataset.chord;
-        if (!file) return;
-        const audio = new Audio(`/static/${file}`);
-        audio.play();
+    document.querySelectorAll(".audio-button").forEach((button) => {
+        button.addEventListener("click", () => {
+            const file = button.dataset.chord;
+            if (!file) return;
+            const audio = new Audio(`/static/${file}`);
+            audio.play();
+        });
     });
-});
 </script>
 
 {% endblock %}

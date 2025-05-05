@@ -1,105 +1,136 @@
-{% extends "navbar.html" %}
-{% block title %}Question 4{% endblock %}
-{% block content %}
+{% extends "navbar.html" %} {% block title %}Question 4{% endblock %} {% block
+content %}
 
 <head>
-  <style>
-      body.quiz .container{display:block;flex-direction:center;justify-content:center;align-items:center;height:auto;text-align:initial;width:100%;padding-right:15px;padding-left:15px;margin-right:auto;margin-left:auto}
-      .btn-option{width:100%;padding-top:1rem;padding-bottom:1rem;margin-bottom:.5rem;font-size:1.1rem;background-color:#fff}
-      body.quiz h4{font-weight:normal}
-      .btn-option.selected{background-color:#000!important;color:#fff!important;border-color:#000!important}
-      .btn-option.correct{background-color:#28a745!important;color:#fff!important;border-color:#28a745!important}
-      .btn-option.incorrect{background-color:#dc3545!important;color:#fff!important;border-color:#dc3545!important}
-      audio{width:200px;outline:none}
-  </style>
+    <style>
+        body.quiz .container {
+            display: block;
+            flex-direction: center;
+            justify-content: center;
+            align-items: center;
+            height: auto;
+            text-align: initial;
+            width: 100%;
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+        .btn-option {
+            width: 100%;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            background-color: #fff;
+        }
+        body.quiz h4 {
+            font-weight: normal;
+        }
+        .btn-option.selected {
+            background-color: #000 !important;
+            color: #fff !important;
+            border-color: #000 !important;
+        }
+        .btn-option.correct {
+            background-color: #28a745 !important;
+            color: #fff !important;
+            border-color: #28a745 !important;
+        }
+        .btn-option.incorrect {
+            background-color: #dc3545 !important;
+            color: #fff !important;
+            border-color: #dc3545 !important;
+        }
+        audio {
+            width: 200px;
+            outline: none;
+        }
+    </style>
 </head>
 
 <body class="quiz">
+    <div class="tutorial-container">
+        <h1>Question 4</h1>
+        <p>Current score: <strong id="score-display">{{ score }}</strong></p>
+        <p>What genre is the following chord progression associated with?</p>
 
-<div class="tutorial-container">
-    <h1>Question 4</h1>
-    <p>Current score: <strong id="score-display">{{ score }}</strong></p>
-    <p>What genre is the following chord progression associated with?</p>
+        <audio controls>
+            <source
+                src="{{ url_for('static', filename='q4_audio.mp3') }}"
+                type="audio/mpeg"
+            />
+            Your browser does not support the audio element.
+        </audio>
+    </div>
 
-    <audio controls>
-        <source src="{{ url_for('static', filename='q4_audio.mp3') }}" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
-</div>
+    <div class="container">
+        <div class="row justify-content-center" style="text-align: center">
+            <div class="col-md-4"></div>
 
-<div class="container">
-    <div class="row justify-content-center" style="text-align:center;">
-        <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <div class="row justify-content-center mb-2">
+                    <button
+                        type="button"
+                        class="btn btn-outline-dark btn-option"
+                        data-group="q4"
+                        data-correct="true"
+                        id="q4opt1"
+                    >
+                        Jazz
+                    </button>
+                </div>
 
-        <div class="col-md-4">
-            <div class="row justify-content-center mb-2">
-                <button type="button" class="btn btn-outline-dark btn-option"
-                        data-group="q4" data-correct="true"  id="q4opt1">Jazz</button>
+                <div class="row justify-content-center mb-2">
+                    <button
+                        type="button"
+                        class="btn btn-outline-dark btn-option"
+                        data-group="q4"
+                        data-correct="false"
+                        id="q4opt2"
+                    >
+                        Pop
+                    </button>
+                </div>
+
+                <div class="row mb-2">
+                    <button
+                        type="button"
+                        class="btn btn-outline-dark btn-option"
+                        data-group="q4"
+                        data-correct="false"
+                        id="q4opt3"
+                    >
+                        Rock
+                    </button>
+                </div>
+
+                <div class="row mb-2">
+                    <button
+                        type="button"
+                        class="btn btn-outline-dark btn-option"
+                        data-group="q4"
+                        data-correct="false"
+                        id="q4opt4"
+                    >
+                        Blues
+                    </button>
+                </div>
             </div>
 
-            <div class="row justify-content-center mb-2">
-                <button type="button" class="btn btn-outline-dark btn-option"
-                        data-group="q4" data-correct="false" id="q4opt2">Pop</button>
-            </div>
-
-            <div class="row mb-2">
-                <button type="button" class="btn btn-outline-dark btn-option"
-                        data-group="q4" data-correct="false" id="q4opt3">Rock</button>
-            </div>
-
-            <div class="row mb-2">
-                <button type="button" class="btn btn-outline-dark btn-option"
-                        data-group="q4" data-correct="false" id="q4opt4">Blues</button>
-            </div>
+            <div class="col-md-4"></div>
         </div>
 
-        <div class="col-md-4"></div>
+        <div class="navigation-buttons">
+            <a href="/quiz/3"><button>Back</button></a>
+            <span>4/5</span>
+            <a href="/quiz/5"
+                ><button id="next-button" disabled>Next</button></a
+            >
+        </div>
     </div>
-
-    <div class="navigation-buttons">
-        <a href="/quiz/3"><button>Back</button></a>
-        <span>4/5</span>
-        <a href="/quiz/5"><button id="next-button" disabled>Next</button></a>
-    </div>
-</div>
-
-<!-- ─── scoring / colour feedback ──────────────────────────────── -->
-<script>
-let alreadyScored = false;
-
-document.querySelectorAll('.btn-option').forEach(btn => {
-    btn.addEventListener('click', () => {
-
-        /* clear previous styling and mark selected */
-        document.querySelectorAll('.btn-option')
-                .forEach(b => b.classList.remove('selected','correct','incorrect'));
-        btn.classList.add('selected');
-
-        /* colour feedback */
-        if (btn.dataset.correct === "true") {
-            btn.classList.add('correct');
-        } else {
-            btn.classList.add('incorrect');
-        }
-
-        /* send +1 to the server once */
-        if (btn.dataset.correct === "true" && !alreadyScored) {
-            alreadyScored = true;
-            fetch("/update-score", {
-                method:  "POST",
-                headers: {"Content-Type":"application/json"},
-                body:    JSON.stringify({increment:1})
-            })
-            .then(r => r.json())
-            .then(d => document.getElementById('score-display').textContent = d.score)
-            .catch(err => console.error("score update failed", err));
-        }
-
-        /* allow navigation */
-        document.getElementById('next-button').disabled = false;
-    });
-});
-</script>
-
+    <script>
+        initQuiz({ type: "single" });
+    </script>
 </body>
 {% endblock %}

@@ -1,110 +1,125 @@
-{% extends "navbar.html" %}
-{% block title %}Question 3{% endblock %}
-{% block content %}
+{% extends "navbar.html" %} {% block title %}Question 3{% endblock %} {% block
+content %}
 
 <!-- ─── styles – unchanged from your original ──────────────────── -->
 <head>
     <style>
-        body.quiz .container{display:block;flex-direction:center;justify-content:center;align-items:center;height:auto;text-align:initial;width:100%;padding-right:15px;padding-left:15px;margin-right:auto;margin-left:auto}
-        .btn-option{width:100%;padding-top:1rem;padding-bottom:1rem;margin-bottom:.5rem;font-size:1.1rem;background-color:#fff}
-        body.quiz h4{font-weight:normal}
-        .btn-option.selected{background-color:#000!important;color:#fff!important;border-color:#000!important}
-        .btn-option.correct{background-color:#28a745!important;color:#fff!important;border-color:#28a745!important}
-        .btn-option.incorrect{background-color:#dc3545!important;color:#fff!important;border-color:#dc3545!important}
+        body.quiz .container {
+            display: block;
+            flex-direction: center;
+            justify-content: center;
+            align-items: center;
+            height: auto;
+            text-align: initial;
+            width: 100%;
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+        .btn-option {
+            width: 100%;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            background-color: #fff;
+        }
+        body.quiz h4 {
+            font-weight: normal;
+        }
+        .btn-option.selected {
+            background-color: #000 !important;
+            color: #fff !important;
+            border-color: #000 !important;
+        }
+        .btn-option.correct {
+            background-color: #28a745 !important;
+            color: #fff !important;
+            border-color: #28a745 !important;
+        }
+        .btn-option.incorrect {
+            background-color: #dc3545 !important;
+            color: #fff !important;
+            border-color: #dc3545 !important;
+        }
     </style>
 </head>
 
 <body class="quiz">
+    <div class="tutorial-container">
+        <h1>Question 3</h1>
+        <p>Current score: <strong id="score-display">{{ score }}</strong></p>
+        <p>What is the “I–V–vi-IV” chord progression known for?</p>
+    </div>
 
-<div class="tutorial-container">
-    <h1>Question 3</h1>
-    <p>Current score: <strong id="score-display">{{ score }}</strong></p>
-    <p>What is the “I–V–vi-IV” chord progression known for?</p>
-</div>
+    <div class="container">
+        <div class="row justify-content-center" style="text-align: center">
+            <div class="col-md-4"></div>
 
-<div class="container">
-    <div class="row justify-content-center" style="text-align:center;">
-        <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <div class="row justify-content-center mb-2">
+                    <button
+                        type="button"
+                        class="btn btn-outline-dark btn-option"
+                        data-group="chord-prog"
+                        data-correct="false"
+                        id="q3opt1"
+                    >
+                        Being named after Pachelbel's Canon
+                    </button>
+                </div>
 
-        <div class="col-md-4">
-            <div class="row justify-content-center mb-2">
-                <button type="button" class="btn btn-outline-dark btn-option"
-                        data-group="chord-prog" data-correct="false" id="q3opt1">
-                    Being named after Pachelbel's Canon
-                </button>
+                <div class="row justify-content-center mb-2">
+                    <button
+                        type="button"
+                        class="btn btn-outline-dark btn-option"
+                        data-group="chord-prog"
+                        data-correct="true"
+                        id="q3opt2"
+                    >
+                        Its diversity across genres
+                    </button>
+                </div>
+
+                <div class="row mb-2">
+                    <button
+                        type="button"
+                        class="btn btn-outline-dark btn-option"
+                        data-group="chord-prog"
+                        data-correct="false"
+                        id="q3opt3"
+                    >
+                        Its use in modern-day music
+                    </button>
+                </div>
+
+                <div class="row mb-2">
+                    <button
+                        type="button"
+                        class="btn btn-outline-dark btn-option"
+                        data-group="chord-prog"
+                        data-correct="false"
+                        id="q3opt4"
+                    >
+                        Being easy to improvise off of
+                    </button>
+                </div>
             </div>
 
-            <div class="row justify-content-center mb-2">
-                <button type="button" class="btn btn-outline-dark btn-option"
-                        data-group="chord-prog" data-correct="true" id="q3opt2">
-                    Its diversity across genres
-                </button>
-            </div>
-
-            <div class="row mb-2">
-                <button type="button" class="btn btn-outline-dark btn-option"
-                        data-group="chord-prog" data-correct="false" id="q3opt3">
-                    Its use in modern-day music
-                </button>
-            </div>
-
-            <div class="row mb-2">
-                <button type="button" class="btn btn-outline-dark btn-option"
-                        data-group="chord-prog" data-correct="false" id="q3opt4">
-                    Being easy to improvise off of
-                </button>
-            </div>
+            <div class="col-md-4"></div>
         </div>
 
-        <div class="col-md-4"></div>
+        <div class="navigation-buttons">
+            <a href="/quiz/2"><button>Back</button></a>
+            <span>3/5</span>
+            <a href="/quiz/4"
+                ><button id="next-button" disabled>Next</button></a
+            >
+        </div>
     </div>
-
-    <div class="navigation-buttons">
-        <a href="/quiz/2"><button>Back</button></a>
-        <span>3/5</span>
-        <a href="/quiz/4"><button id="next-button" disabled>Next</button></a>
-    </div>
-</div>
-
-<!-- ─── scoring / posting glue ─────────────────────────────────── -->
-<script>
-let alreadyScored = false;   // avoid double-counting
-
-document.querySelectorAll('.btn-option').forEach(btn => {
-    btn.addEventListener('click', () => {
-
-        /* 1 -- visual “selected” mark (only one allowed) */
-        document.querySelectorAll('.btn-option')
-                .forEach(b => b.classList.remove('selected','correct','incorrect'));
-        btn.classList.add('selected');
-
-        /* 2 -- add colour for correctness */
-        if (btn.dataset.correct === "true") {
-            btn.classList.add('correct');
-        } else {
-            btn.classList.add('incorrect');
-        }
-
-        /* 3 -- increment global score once if correct */
-        if (btn.dataset.correct === "true" && !alreadyScored) {
-            alreadyScored = true;
-            fetch("/update-score", {
-                method:  "POST",
-                headers: {"Content-Type": "application/json"},
-                body:    JSON.stringify({increment: 1})
-            })
-            .then(r => r.json())
-            .then(data =>
-                document.getElementById('score-display').textContent = data.score
-            )
-            .catch(err => console.error("score update failed", err));
-        }
-
-        /* 4 -- let the user continue */
-        document.getElementById('next-button').disabled = false;
-    });
-});
-</script>
-
+    <script>
+        initQuiz({ type: "single" });
+    </script>
 </body>
 {% endblock %}

@@ -53,7 +53,7 @@ $(document).ready(function () {
         const notes = chords[chordName];
         if (!notes) return;
 
-        clearTimeouts(); // <- ADD THIS at the start too for safety
+        clearTimeouts();
         clearKeys();
 
         // Visual animation
