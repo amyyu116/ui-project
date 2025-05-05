@@ -1,64 +1,91 @@
-{% extends "navbar.html" %}
-{% block title %}Final Score{% endblock %}
-{% block content %}
+{% extends "navbar.html" %} {% block title %}Final Score{% endblock %} {% block
+content %}
 
 <head>
-  <style>
-      /* overall layout */
-      body.quiz .container{display:flex;flex-direction:column;align-items:center;padding:40px}
-      h1{margin-bottom:.5rem}
-      p.lead{font-size:1.25rem;margin-bottom:2rem}
+    <style>
+        /* overall layout */
+        body.quiz .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px;
+        }
+        h1 {
+            margin-bottom: 0.5rem;
+        }
+        p.lead {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+        }
 
-      /* circular progress meter ----------------------------------- */
-      .circle-wrapper{
-          position:relative;
-          width:160px;height:160px;
-          border-radius:50%;
-          background:conic-gradient(
-              #28a745 calc(var(--percent)*1%),   /* green arc   */
-              #e9ecef   0);                      /* grey track  */
-          display:flex;align-items:center;justify-content:center;
-          animation:spin 1s ease-out;
-      }
-      @keyframes spin{
-          from{--percent:0;}to{/* target set inline */}
-      }
-      .circle-wrapper::before{
-          content:"";
-          position:absolute;
-          inset:12px;                            /* inner hole */
-          background:#fff;border-radius:inherit;
-      }
-      .score-text{
-          position:relative;                     /* above ::before */
-          font-size:1.75rem;font-weight:700;color:#28a745;
-      }
+        /* circular progress meter ----------------------------------- */
+        .circle-wrapper {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background: conic-gradient(
+                #28a745 calc(var(--percent) * 1%),
+                /* green arc   */ #e9ecef 0
+            ); /* grey track  */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: spin 1s ease-out;
+        }
+        @keyframes spin {
+            from {
+                --percent: 0;
+            }
+            to {
+                /* target set inline */
+            }
+        }
+        .circle-wrapper::before {
+            content: "";
+            position: absolute;
+            inset: 12px; /* inner hole */
+            background: #fff;
+            border-radius: inherit;
+        }
+        .score-text {
+            position: relative; /* above ::before */
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #28a745;
+        }
 
-      /* navigation buttons */
-      .navigation-buttons{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;margin-top:40px}
-      .navigation-buttons a button{padding:10px 24px;font-size:1rem}
-  </style>
+        /* navigation buttons */
+        .navigation-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 40px;
+        }
+        .navigation-buttons a button {
+            padding: 10px 24px;
+            font-size: 1rem;
+        }
+    </style>
 </head>
 
 <body class="quiz">
+    <div class="container">
+        <h1>🎉 Final Score 🎉</h1>
+        <p class="lead">Congratulations! You’ve finished the quiz.</p>
 
-<div class="container">
-    <h1>🎉 Final Score 🎉</h1>
-    <p class="lead">Congratulations! You’ve finished the quiz.</p>
-
-    <!-- circular score meter -->
-    {% set pct = (score/5)*100 %}
-    <div class="circle-wrapper" style="--percent:{{ pct|round(0) }}">
-        <div class="score-text">{{ score }}/5</div>
+        <!-- circular score meter -->
+        {% set pct = (score/5)*100 %}
+        <div class="circle-wrapper" style="--percent:{{ pct|round(0) }}">
+            <div class="score-text">{{ score }}/5</div>
+        </div>
     </div>
-</div>
 
-<!-- controls -->
-<div class="navigation-buttons">
-    <a href="/restart-quiz"><button>Restart Quiz</button></a>
-    <a href="/quiz/10"><button>Back</button></a>
-    <a href="/"><button>Home</button></a>
-</div>
-
+    <!-- controls -->
+    <div class="navigation-buttons">
+        <a href="/restart-quiz"><button>Restart Quiz</button></a>
+        <a href="/"><button>Home</button></a>
+    </div>
 </body>
 {% endblock %}
