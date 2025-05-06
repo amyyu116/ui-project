@@ -1,25 +1,122 @@
-.row {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr); /* 6 equal parts = 12-grid style */
-    gap: 10px;
-    margin-bottom: 30px;
+/* quiz styling */
+body.quiz .container {
+    display: block;
+    flex-direction: center;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    text-align: initial;
     width: 100%;
-    max-width: 1000px; /* Optional max width */
-    margin-left: auto;
+    padding-right: 15px;
+    padding-left: 15px;
     margin-right: auto;
-  }
-  
-  .col {
-    padding: 10px;
-  }
-  
-  /* Simulate col-md-2 by spanning 2/12 (i.e. 2 out of 6 units = 1fr each) */
-  .blank {
-    grid-column: span 1; /* 1 of 6 units = 2 Bootstrap columns */
-  }
-  
-  .content {
-    grid-column: span 1;
-    background-color: #f0f0f0; /* Optional for visibility */
+    margin-left: auto;
+}
+
+.btn-option {
+    width: 100%;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem; /* Optional: make text a bit bigger */
+    background-color: white;
+}
+
+body.quiz h4 {
+    font-weight: normal;
+}
+
+.btn-option.selected {
+    background-color: black !important;
+    color: white !important;
+    border-color: black !important;
+}
+
+.btn-option.correct {
+    background-color: #28a745 !important; /* green */
+    color: white !important;
+    border-color: #28a745 !important;
+}
+
+.btn-option.incorrect {
+    background-color: #dc3545 !important; /* red */
+    color: white !important;
+    border-color: #dc3545 !important;
+}
+
+/* answer bank */
+#answer-bank {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+.answer-card {
+    padding: 0.5rem 1rem;
+    border: 1px solid #333;
+    border-radius: 6px;
+    cursor: grab;
+    background: #fff;
+    font-weight: 500;
     text-align: center;
-  }
+    min-width: 120px;
+}
+.answer-card.correct {
+    background: #28a745 !important;
+    color: #fff !important;
+    border-color: #28a745 !important;
+}
+.answer-card.incorrect {
+    background: #dc3545 !important;
+    color: #fff !important;
+    border-color: #dc3545 !important;
+}
+
+/* q5 videos row */
+.videos-row {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.video-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.video-box iframe {
+    width: 300px;
+    height: auto;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+}
+
+.drop-zone {
+    width: 220px;
+    height: 42px;
+    margin-top: 0.5rem;
+    border: 2px dashed #666;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.drop-zone.filled {
+    border-style: solid;
+}
+
+.navigation-buttons {
+    text-align: center;
+    margin-top: 40px;
+}
+
+audio {
+    width: 200px;
+    outline: none;
+}

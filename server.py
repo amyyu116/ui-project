@@ -13,7 +13,16 @@ score = 0
  
 id        = str(uuid.uuid4())[:8]
 filename  = f"user{id}_log.json"
-chord_names = { ... }                        
+chord_names = {
+     "i_chord": "C Major",
+     "ii_chord": "d minor",
+     "iii_chord": "e minor",
+     "iv_chord": "F Major",
+     "v_chord": "G Major",
+     "vi_chord": "a minor",
+     "vii_chord": "b diminished"
+ }
+
 def log(msg):
     with open(filename, "a") as f:
         f.write(json.dumps(msg) + "\n")
