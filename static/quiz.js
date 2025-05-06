@@ -1,4 +1,8 @@
 let alreadyScored = false;
+let nextClickedOnce = false;
+let quizType;
+let placements = {};
+let correctMap = {};
 
 // Shared scoring function
 function incrementScore() {
@@ -14,23 +18,87 @@ function incrementScore() {
         .catch((err) => console.error("Score update failed:", err));
 }
 
-function enableNext() {
+function verifyAnswers() {
     const nextBtn = document.getElementById("next-button");
-    if (nextBtn) nextBtn.disabled = false;
+    const nextUrl = nextBtn.dataset.nextUrl;
+
+    if (!nextClickedOnce) {
+        nextClickedOnce = true;
+        let allCorrect = true;
+
+        // answer verification
+        if (quizType === "grouped") {
+            const picks = Array.from(
+                document.querySelectorAll(".btn-option.selected")
+            );
+            allCorrect = picks.every((b) => b.dataset.correct === "true");
+            picks.forEach((b) => {
+                b.classList.add(
+                    b.dataset.correct === "true" ? "correct" : "incorrect"
+                );
+            });
+        } else if (quizType === "single") {
+            const selected = document.querySelector(".btn-option.selected");
+            if (selected) {
+                allCorrect = selected.dataset.correct === "true";
+                selected.classList.add(allCorrect ? "correct" : "incorrect");
+            } else {
+                allCorrect = false;
+            }
+        } else if (quizType === "dragdrop") {
+            for (const v in placements) {
+                const card = document.getElementById(placements[v]);
+                if (placements[v] === correctMap[v]) {
+                    card.classList.add("correct");
+                } else {
+                    card.classList.add("incorrect");
+                    allCorrect = false;
+                }
+            }
+        }
+
+        if (allCorrect && !alreadyScored) {
+            alreadyScored = true;
+            incrementScore();
+        }
+
+        return; // Wait for second click
+    }
+
+    // Second click: go to next page
+    if (nextUrl) {
+        window.location.href = nextUrl;
+    } else {
+        console.warn("No next URL specified.");
+    }
 }
 
+function enableNext() {
+    const nextBtn = document.getElementById("next-button");
+    if (nextBtn) {
+        nextBtn.disabled = false;
+
+        // Replace old event listeners
+        const newBtn = nextBtn.cloneNode(true);
+        newBtn.dataset.nextUrl = nextBtn.dataset.nextUrl;
+        nextBtn.parentNode.replaceChild(newBtn, nextBtn);
+        newBtn.addEventListener("click", verifyAnswers);
+    }
+}
+
+// ---- GROUPED MULTIPLE-CHOICE ----
 function initGrouped(groups) {
     document.querySelectorAll(".btn-option").forEach((btn) => {
         btn.addEventListener("click", () => {
             const group = btn.dataset.group;
 
-            // Deselect others in group
             document
                 .querySelectorAll(`.btn-option[data-group="${group}"]`)
-                .forEach((b) => b.classList.remove("selected"));
+                .forEach((b) =>
+                    b.classList.remove("selected", "correct", "incorrect")
+                );
             btn.classList.add("selected");
 
-            // Check if all groups are answered
             const picks = groups.map((group) =>
                 document.querySelector(
                     `.btn-option.selected[data-group="${group}"]`
@@ -38,35 +106,7 @@ function initGrouped(groups) {
             );
 
             if (picks.every(Boolean)) {
-                const correct = picks.every(
-                    (b) => b.dataset.correct === "true"
-                );
-
-                picks.forEach((b) => {
-                    b.classList.add(
-                        b.dataset.correct === "true" ? "correct" : "incorrect"
-                    );
-                });
-
-                if (correct && !alreadyScored) {
-                    alreadyScored = true;
-                    fetch("/update-score", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ increment: 1 }),
-                    })
-                        .then((r) => r.json())
-                        .then((data) => {
-                            document.getElementById(
-                                "score-display"
-                            ).textContent = data.score;
-                        })
-                        .catch((err) =>
-                            console.error("Could not update score:", err)
-                        );
-                }
-
-                document.getElementById("next-button").disabled = false;
+                enableNext();
             }
         });
     });
@@ -82,23 +122,15 @@ function initSingleChoice() {
                     b.classList.remove("selected", "correct", "incorrect")
                 );
             btn.classList.add("selected");
-
-            const correct = btn.dataset.correct === "true";
-            btn.classList.add(correct ? "correct" : "incorrect");
-
-            if (correct && !alreadyScored) {
-                alreadyScored = true;
-                incrementScore();
-            }
-
             enableNext();
         });
     });
 }
 
 // ---- DRAG AND DROP ----
-function initDragAndDrop(correctMap) {
-    const placements = {};
+function initDragAndDrop(correctMapInput) {
+    correctMap = correctMapInput;
+    placements = {};
 
     document.querySelectorAll(".answer-card").forEach((card) => {
         card.addEventListener("dragstart", (e) => {
@@ -114,7 +146,6 @@ function initDragAndDrop(correctMap) {
             const card = document.getElementById(id);
             if (!card) return;
 
-            // Return existing card to bank
             if (zone.firstElementChild) {
                 document
                     .getElementById("answer-bank")
@@ -129,7 +160,7 @@ function initDragAndDrop(correctMap) {
             const videoId = zone.dataset.videoId;
             placements[videoId] = id;
 
-            evaluateDragAndDrop(correctMap, placements);
+            evaluateDragAndDrop();
         });
     });
 
@@ -160,36 +191,21 @@ function initDragAndDrop(correctMap) {
     });
 }
 
-function evaluateDragAndDrop(correctMap, placements) {
+function evaluateDragAndDrop() {
     if (Object.keys(placements).length !== Object.keys(correctMap).length)
         return;
-
-    let allCorrect = true;
-    for (const v in placements) {
-        const card = document.getElementById(placements[v]);
-        if (placements[v] === correctMap[v]) {
-            card.classList.add("correct");
-        } else {
-            card.classList.add("incorrect");
-            allCorrect = false;
-        }
-    }
-
-    if (allCorrect && !alreadyScored) {
-        alreadyScored = true;
-        incrementScore();
-    }
-
     enableNext();
 }
 
-// ---- INIT FUNCTION: Call based on page type ----
+// ---- MAIN INIT FUNCTION ----
 function initQuiz(config) {
-    if (config.type === "grouped") {
+    quizType = config.type;
+
+    if (quizType === "grouped") {
         initGrouped(config.groups);
-    } else if (config.type === "single") {
+    } else if (quizType === "single") {
         initSingleChoice();
-    } else if (config.type === "dragdrop") {
+    } else if (quizType === "dragdrop") {
         initDragAndDrop(config.correctMap);
     }
 }
