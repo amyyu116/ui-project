@@ -1,7 +1,11 @@
 {% extends "navbar.html" %} {% block title %}Question 5{% endblock %} {% block
 content %}
-<link rel="stylesheet" href="{{ url_for('static', filename='quiz.css') }}" />
-
+<head>
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='quiz.css') }}"
+    />
+</head>
 <body class="quiz">
     <div class="tutorial-container">
         <h1>Question 5</h1>
