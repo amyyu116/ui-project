@@ -6,7 +6,7 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: #e6f4ff; /* light blue background */
+    background-color: #fff8e7ff !important; /* light blue background */
     color: #003366;
 }
 
@@ -49,7 +49,8 @@ p {
 
 .start-button:hover {
     color: white;
-    background-color: #122b54;
+    background-color: #3b8fff;
+    text-decoration: none;
 }
 
 /* Existing styles ... */
@@ -71,8 +72,8 @@ p {
 }
 
 .nav-item.active a {
-    color: white;
-    text-decoration: underline;
+    color: #3b8fff !important;
+    text-decoration: none;
 }
 
 .nav-progress {
@@ -220,8 +221,9 @@ p {
 }
 
 .navigation-buttons button {
-    background-color: #f0f0f0;
+    background-color: #1c4587;
     border: 1px solid #ccc;
+    color: white;
     border-radius: 8px;
     padding: 10px 20px;
     font-size: 1em;
@@ -229,7 +231,7 @@ p {
 }
 
 .navigation-buttons button:hover {
-    background-color: #d9eaff;
+    background-color: #3b8fff;
 }
 
 .navigation-buttons span {
