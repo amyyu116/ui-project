@@ -4,40 +4,54 @@
 
 {% block content %}
 <div class="tutorial-container">
-    <h1>Popular Progressions: "Pachelbel's Progression"</h1>
+    <h1>Popular Progressions: "the ii-V-I"</h1>
 
-    <div class="content-grid">
-        <div>
-            <p class="list-header"><strong>Traits</strong></p>
-            <ul>
-                <li>Utilizes <strong><em>I–V–vi–iii-IV</em></strong>, sometimes rearranged</li>
-                <li>Originally a famous wedding song, named "Canon in D Major" or "Pachelbel's Canon" after its composer
-                </li>
-            </ul>
+    <br>
+
+     <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <p class="list-header"><strong>Traits</strong></p>
+            </div>
+    
+            <div class="row">
+                <ul>
+                    <li>Three-chord progression of <strong><em>ii-V-I</em></strong>, sometimes rearranged</li>
+                    <li>Fundamental for jazz musicians, providing a harmonic framework for improvisation and establishing a clear tonal center</li>
+                </ul>
+            </div>
+    
             <br>
-
-            <p class="list-header"><strong>Notable Songs</strong></p>
-            <ul>
-                <li>"Canon in D Major" - Johann Pachelbel</li>
-                <li>"Firework" - Katy Perry</li>
-                <li>"Deep Sea Girl" - Yuuyu</li>
-            </ul>
-            <br>
+    
+            <div class="row">
+                <p class="list-header"><strong>Notable Songs</strong></p>
+            </div>
+    
+            <div class="row">
+                <ul>
+                    <li>"Autumn Leaves" - Nat King Cole</li>
+                    <li>"All the Things You Are" - Ella Fitzgerald</li>
+                    <li>"Fly Me to the Moon" - Frank Sinatra</li>
+                </ul>
+            </div>
         </div>
-
-        <div class="image-container">
-            <img src="{{ url_for('static', filename='pachelbel.jpg') }}" alt="Portrait of Johann Pachelbel">
-            <div class="image-caption">Johann Pachelbel</div>
+    
+        <div class="col-md-6 text-center">
+            <p class="mb-2"><em>“Fly Me to the Moon" chorus</em></p>
+            <video controls width="350">
+                <source src="{{ url_for('static', filename='flymetothemoon.mp4') }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
         </div>
-
     </div>
 
-
+    <br>
+    <br>
 
     <div class="navigation-buttons">
         <a href="/learn/5"><button>Back</button></a>
-        <span>6/9</span>
-        <a href="/learn/7"><button>Next</button></a>
+        <span>6/6</span>
+        <a href="/quiz/1"><button>Proceed to quiz</button></a>
     </div>
 </div>
 

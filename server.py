@@ -67,7 +67,7 @@ def render_results():
 
 @app.route('/learn/<int:page_num>')
 def render_tutorial(page_num):
-    total_pages = 9
+    total_pages = 6
     return render_template(f"learn{page_num}.html", page_num=page_num, total_pages=total_pages)
 
 @app.route('/log-entry-time', methods=['POST'])

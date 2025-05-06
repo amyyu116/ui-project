@@ -4,35 +4,53 @@
 
 {% block content %}
 <div class="tutorial-container">
-    <h1>Popular Progressions: "four-chord progression"
-    </h1>
+    <h1>Popular Progressions: "Pachelbel's Progression"</h1>
 
-    <p class="list-header"><strong>Example</strong></p>
+    <br>
 
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <p class="list-header"><strong>Traits</strong></p>
+            </div>
     
-    <div class="image-grid">
-        <div class="image-container">
-            <p><em>“Someone Like You” chorus</em></p>
+            <div class="row">
+                <ul>
+                    <li>Utilizes <strong><em>I–V–vi–iii–IV</em></strong>, sometimes rearranged</li>
+                    <li>Originally a famous wedding song, named "Canon in D Major" or "Pachelbel's Canon" after its composer</li>
+                </ul>
+            </div>
+    
             <br>
-            <video controls>
-                <source src="{{ url_for('static', filename='someonelikeyou.mp4') }}" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
+    
+            <div class="row">
+                <p class="list-header"><strong>Notable Songs</strong></p>
+            </div>
+    
+            <div class="row">
+                <ul>
+                    <li>"Canon in D Major" - Johann Pachelbel</li>
+                    <li>"Firework" - Katy Perry</li>
+                    <li>"Deep Sea Girl" - Yuuyu</li>
+                </ul>
+            </div>
         </div>
-
-        <div class="image-container">
-            <p><em>“Little Talks” chorus</em></p>
-            <br>
-            <video controls>
-                <source src="{{ url_for('static', filename='littletalks.mp4') }}" type="video/mp4">
+    
+        <div class="col-md-6 text-center">
+            <p class="mb-2"><em>“Deep Sea Girl” chorus</em></p>
+            <video controls width="350">
+                <source src="{{ url_for('static', filename='deepseagirl.mp4') }}" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
         </div>
     </div>
 
+    <br>
+    <br>
+
     <div class="navigation-buttons">
         <a href="/learn/4"><button>Back</button></a>
-        <span>5/9</span>
+        <span>5/6</span>
         <a href="/learn/6"><button>Next</button></a>
     </div>
 </div>
