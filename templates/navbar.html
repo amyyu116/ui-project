@@ -113,11 +113,16 @@
                 >
                     <a href="/learn/1">Tutorial</a>
                 </div>
-                <div
-                    class="nav-item {% if 'quiz' in request.path %}active{% endif %}"
-                >
-                    <a href="/quiz/1?restart=true">Quiz</a>
+                <div class="nav-item {% if 'quiz' in request.path %}active{% endif %}">
+                    {% if tutorial_complete %}
+                        <a href="/quiz/1?restart=true">Quiz</a>
+                    {% else %}
+                        <a href="#" style="pointer-events: none; opacity: 0.5;">
+                            Quiz 🔒
+                        </a>
+                    {% endif %}
                 </div>
+                
             </div>
 
             {% if 'learn' in request.path or 'quiz' in request.path %}
