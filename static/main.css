@@ -290,3 +290,8 @@ p {
     font-size: 0.8em;
     color: lightgray;
 }
+
+#next-button {
+    width: 100px;
+    text-align: center;
+}

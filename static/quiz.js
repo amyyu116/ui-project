@@ -20,6 +20,7 @@ function incrementScore() {
 
 function verifyAnswers() {
     const nextBtn = document.getElementById("next-button");
+    nextBtn.innerText = 'Next';
     const nextUrl = nextBtn.dataset.nextUrl;
 
     if (!nextClickedOnce) {
@@ -37,6 +38,10 @@ function verifyAnswers() {
                     b.dataset.correct === "true" ? "correct" : "incorrect"
                 );
             });
+            document.querySelectorAll(".btn-option").forEach((btn) => {
+                btn.classList.add("disabled");
+                btn.style.pointerEvents = "none";
+            });  
         } else if (quizType === "single") {
             const selected = document.querySelector(".btn-option.selected");
             if (selected) {
@@ -45,6 +50,10 @@ function verifyAnswers() {
             } else {
                 allCorrect = false;
             }
+            document.querySelectorAll(".btn-option").forEach((btn) => {
+                btn.classList.add("disabled");
+                btn.style.pointerEvents = "none";
+            });  
         } else if (quizType === "dragdrop") {
             for (const v in placements) {
                 const card = document.getElementById(placements[v]);
@@ -55,12 +64,21 @@ function verifyAnswers() {
                     allCorrect = false;
                 }
             }
+
+            document.querySelectorAll(".answer-card").forEach((card) => {
+                card.setAttribute("draggable", "false");
+            });
+            document.querySelectorAll(".drop-zone").forEach((zone) => {
+                zone.removeEventListener("dragover", (e) => e.preventDefault());
+                zone.removeEventListener("drop", (e) => e.preventDefault());
+                zone.style.pointerEvents = "none";
+            });
         }
 
         if (allCorrect && !alreadyScored) {
             alreadyScored = true;
             incrementScore();
-        }
+        }      
 
         return; // Wait for second click
     }
