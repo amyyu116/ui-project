@@ -1,0 +1,67 @@
+{% extends "navbar.html" %} {% block title %}Question {{ page_num }}{% endblock
+%} {% block content %}
+<head>
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='quiz.css') }}"
+    />
+</head>
+
+<body class="quiz">
+    <div class="tutorial-container">
+        <h1>Quiz - Question {{ page_num }}</h1>
+        <p>Current score: <strong id="score-display">{{ score }}</strong></p>
+        <p>{{ question["question"] }}</p>
+    </div>
+
+    <div class="container">
+        <div class="row justify-content-center" style="text-align: center">
+            <div class="col-md-2"></div>
+
+            {% for group in question["groups"] %}
+            <div class="col-md-3">
+                <div class="row justify-content-center">
+                    <h4>{{ group[0] }}</h4>
+                </div>
+
+                {% for option in group[1] %}
+                <div class="row justify-content-center mb-2">
+                    <button
+                        type="button"
+                        class="btn btn-outline-dark btn-option"
+                        data-group="{{ question['group_names'][loop.index0] }}"
+                        data-correct="{{ option[1]|lower }}"
+                        id="{{ option[0].split('/')[0]|lower|replace(' ', '_') }}"
+                    >
+                        {{ option[0] }}
+                    </button>
+                </div>
+                {% endfor %}
+            </div>
+            {% endfor %}
+
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+
+    <br />
+
+    <div class="navigation-buttons">
+        <span>{{ page_num }}/{{ total_questions }}</span>
+        <button
+            id="next-button"
+            disabled
+            data-next-url="/quiz/{{ page_num + 1 }}"
+        >
+            Submit
+        </button>
+    </div>
+
+    <script>
+        initQuiz({
+            type: "grouped",
+            groups: {{ question["group_names"]|tojson }}
+        });
+    </script>
+</body>
+{% endblock %}

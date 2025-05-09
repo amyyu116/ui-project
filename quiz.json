@@ -1,0 +1,71 @@
+{
+    "1": {
+        "type": "grouped",
+        "question": "How are major chords denoted and characterized in music (select one option for each)?",
+        "group_names": ["sound", "case"],
+        "groups": [
+            [
+                "Associated Sound",
+                [
+                    ["Happy/Bright", true],
+                    ["Melancholic/Sad", false]
+                ]
+            ],
+            [
+                "Lowercase/Uppercase",
+                [
+                    ["Lowercase", false],
+                    ["Uppercase", true]
+                ]
+            ]
+        ]
+    },
+    "2": {
+        "type": "single",
+        "question": "How are chords in a major scale ordered?",
+        "answers": [
+            ["I-ii-iii-IV-V-vi-vii°", true],
+            ["I-ii°-iii-iv-V-VI-vii", false],
+            ["i-ii-III-iv-v-VI-VII", false],
+            ["I-II-iii-iv°-V-vi-vii", false]
+        ],
+        "media": null
+    },
+    "3": {
+        "type": "single",
+        "question": "What is the \"I-V-vi-IV\" chorc progression known for?",
+        "answers": [
+            ["Being named after Pachelbel's Canon", true],
+            ["Its diversity across genres", false],
+            ["Its use in modern-day music", false],
+            ["Being easy to improvise off of", false]
+        ],
+        "media": null
+    },
+    "4": {
+        "type": "single",
+        "question": "What genre is the following chord progression associated with?",
+        "answers": [
+            ["Jazz", true],
+            ["Pop", false],
+            ["Rock", false],
+            ["Blues", false]
+        ],
+        "media": "{{ url_for('static', filename='q4_audio.mp3') }}"
+    },
+    "5": {
+        "type": "dragdrop",
+        "question": "Drag each progression to the video it matches.",
+        "answers": ["I-V-vi-IV", "I-V-vi-iii-IV", "ii-V-I"],
+        "media": [
+            "https://drive.google.com/file/d/1p5zPOhZpRQ5ZbeOoOSRlnt4ifKD00NqH/preview",
+            "https://drive.google.com/file/d/196xwgyGOigj2DBFBCigXE4dtV1NYnZm4/preview",
+            "https://drive.google.com/file/d/1q7HH34g1BYuIGt7Ebeu8lEsMLwfj8bbF/preview"
+        ],
+        "correct_map": {
+            "v1": "a3",
+            "v2": "a1",
+            "v3": "a2"
+        }
+    }
+}

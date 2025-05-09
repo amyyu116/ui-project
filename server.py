@@ -2,6 +2,10 @@ from flask import Flask, render_template, request, jsonify, session, redirect
 import json, uuid
 from datetime import datetime, timezone
 
+from openai import chat
+import json
+
+
 app = Flask(__name__)
 app.secret_key = "quiz_key"
 
@@ -9,6 +13,9 @@ app.secret_key = "quiz_key"
 score = 0
 id_ = str(uuid.uuid4())[:8]
 filename = f"user{id_}_log.json"
+
+with open('quiz.json', 'r') as f:
+    questions = json.load(f)
 
 chord_names = {
     "i_chord":   "C Major",
@@ -19,6 +26,7 @@ chord_names = {
     "vi_chord":  "a minor",
     "vii_chord": "b diminished",
 }
+
 
 TOTAL_TUTORIAL_PAGES = 6
 TOTAL_QUIZ_PAGES      = 5   # update if quiz length changes
@@ -96,31 +104,18 @@ def log_entry_time():
 @app.route("/quiz/<int:page_num>")
 def render_quiz(page_num):
     global score
+    question = questions[str(page_num)]
+    template = f"quiz_{question['type']}.html"
+
     tutorial_complete = session.get("tutorial_complete", False)
     return render_template(
-        f"quiz{page_num}.html",
+        template,
         page_num=page_num,
         total_pages=TOTAL_QUIZ_PAGES,
+        question = question,
         score=score,
         tutorial_complete=tutorial_complete,
     )
-
-
-@app.route("/quiz/1")
-def render_quiz_question_one():
-    global score
-    score = 0
-    reset_quiz_state()                    # keep tutorial flags
-    tutorial_complete = session.get("tutorial_complete", False)
-
-    return render_template(
-        "quiz1.html",
-        page_num=1,
-        total_pages=TOTAL_QUIZ_PAGES,
-        score=score,
-        tutorial_complete=tutorial_complete,
-    )
-
 
 @app.route("/restart-quiz")
 def restart_quiz():

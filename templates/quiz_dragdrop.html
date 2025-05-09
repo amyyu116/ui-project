@@ -1,0 +1,53 @@
+{% extends "navbar.html" %} {% block title %}Question {{ page_num }}{% endblock
+%} {% block content %}
+<head>
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='quiz.css') }}"
+    />
+</head>
+<body class="quiz">
+    <div class="tutorial-container">
+        <h1>Question {{ page_num }}</h1>
+        <p>Current score: <strong id="score-display">{{ score }}</strong></p>
+        <p>{{ question["question"] }}</p>
+    </div>
+
+    <!-- Answer bank (horizontal) -->
+    <div id="answer-bank">
+        {% for answer in question["answers"] %}
+        <div class="answer-card" id="a{{ loop.index }}" draggable="true">
+            {{ answer }}
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Videos laid out in a single row -->
+    <div class="videos-row">
+        {% for media_url in question["media"] %}
+        <div class="video-col">
+            <div class="video-box">
+                <iframe src="{{ media_url }}" allow="autoplay"></iframe>
+            </div>
+            <div class="drop-zone" data-video-id="v{{ loop.index }}">
+                drop here
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="navigation-buttons">
+        <span>{{ page_num }}/{{ total_questions }}</span>
+        <button id="next-button" disabled data-next-url="/{{ 'score_page' }}">
+            Submit
+        </button>
+    </div>
+
+    <script>
+        initQuiz({
+            type: "dragdrop",
+            correctMap: {{ question["correct_map"]|tojson }}
+        });
+    </script>
+</body>
+{% endblock %}

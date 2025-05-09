@@ -1,0 +1,61 @@
+{% extends "navbar.html" %} {% block title %}Question {{ page_num }}{% endblock
+%} {% block content %}
+<head>
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='quiz.css') }}"
+    />
+</head>
+<body class="quiz">
+    <div class="tutorial-container">
+        <h1>Question {{ page_num }}</h1>
+        <p>Current score: <strong id="score-display">{{ score }}</strong></p>
+        <p>{{ question["question"] }}</p>
+        {% if question["media"] %}
+        <audio controls>
+            <source src="{{ question['media'] }}" type="audio/mpeg" />
+            Your browser does not support the audio element.
+        </audio>
+        {% endif %}
+    </div>
+
+    <div class="container">
+        <div class="row justify-content-center" style="text-align: center">
+            <div class="col-md-4"></div>
+
+            <div class="col-md-4">
+                {% for answer, correct in question["answers"] %}
+                <div class="row justify-content-center mb-2">
+                    <button
+                        type="button"
+                        class="btn btn-outline-dark btn-option majorq"
+                        data-group="single-choice"
+                        data-correct="{{ 'true' if correct else 'false' }}"
+                        id="q{{ page_num }}opt{{ loop.index }}"
+                    >
+                        {{ answer }}
+                    </button>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="col-md-4"></div>
+        </div>
+
+        <div class="navigation-buttons">
+            <span>{{ page_num }}/{{ total_questions }}</span>
+            <button
+                id="next-button"
+                disabled
+                data-next-url="/quiz/{{ page_num + 1 }}"
+            >
+                Submit
+            </button>
+        </div>
+    </div>
+
+    <script>
+        initQuiz({ type: "single" });
+    </script>
+</body>
+{% endblock %}
