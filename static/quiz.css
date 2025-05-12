@@ -125,3 +125,18 @@ audio {
 .light-score {
     color: #8b8b8b !important;
 }
+
+.correct        { border: 2px solid #28a745; }  /* already in your file */
+.incorrect      { border: 2px solid #dc3545; }
+
+.correct-label  {
+    color: #28a745;
+    font-size: 0.85rem;
+    margin-top: 6px;
+    margin-left: 2px;
+    font-style: italic;
+}
+.your-answer::after   { content: " (your answer)";  font-size: 0.8rem;
+                        color: #dc3545; display:block; }
+.correct-ref::after   { content: " (correct answer)"; font-size: 0.8rem;
+                        color: #28a745; display:block; }

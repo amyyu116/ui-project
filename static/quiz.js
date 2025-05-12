@@ -27,22 +27,28 @@ function verifyAnswers() {
         nextClickedOnce = true;
         let allCorrect = true;
 
-        // answer verification
-        if (quizType === "grouped") {
-            const picks = Array.from(
-                document.querySelectorAll(".btn-option.selected")
-            );
-            allCorrect = picks.every((b) => b.dataset.correct === "true");
-            picks.forEach((b) => {
-                b.classList.add(
-                    b.dataset.correct === "true" ? "correct" : "incorrect"
-                );
+     if (quizType === "grouped") {
+        const selected = document.querySelectorAll(".btn-option.selected");
+        if (selected.length > 0) {
+            allCorrect = Array.from(selected).every((b) => b.dataset.correct === "true");
+            selected.forEach((b) => {
+                b.classList.add(b.dataset.correct === "true" ? "correct" : "incorrect");
             });
-            document.querySelectorAll(".btn-option").forEach((btn) => {
-                btn.classList.add("disabled");
-                btn.style.pointerEvents = "none";
-            });  
-        } else if (quizType === "single") {
+        } else {
+            allCorrect = false;
+        }
+    
+        // Always mark the correct answers in green
+        document.querySelectorAll(".btn-option").forEach((btn) => {
+            if (btn.dataset.correct === "true") {
+                btn.classList.add("correct");
+            }
+            btn.classList.add("disabled");
+            btn.style.pointerEvents = "none";
+        });
+    }
+    
+         else if (quizType === "single") {
             const selected = document.querySelector(".btn-option.selected");
             if (selected) {
                 allCorrect = selected.dataset.correct === "true";
@@ -50,31 +56,63 @@ function verifyAnswers() {
             } else {
                 allCorrect = false;
             }
+        
+            // Always mark the correct answer in green
             document.querySelectorAll(".btn-option").forEach((btn) => {
+                if (btn.dataset.correct === "true") {
+                    btn.classList.add("correct");
+                }
+        
                 btn.classList.add("disabled");
                 btn.style.pointerEvents = "none";
-            });  
-        } else if (quizType === "dragdrop") {
-            for (const v in placements) {
-                const card = document.getElementById(placements[v]);
-                if (placements[v] === correctMap[v]) {
-                    card.classList.add("correct");
-                } else {
-                    card.classList.add("incorrect");
-                    allCorrect = false;
-                }
+            });
+        /* ---------- DRAG-AND-DROP FEEDBACK ---------- */
+/* ---------- DRAG-AND-DROP  FEEDBACK  ---------- */
+} else if (quizType === "dragdrop") {
+
+    // loop over every drop zone we expect an answer for
+    for (const zoneId in correctMap) {
+        const zone        = document.querySelector(
+            `.drop-zone[data-video-id="${zoneId}"]`
+        );
+        const correctId   = correctMap[zoneId];
+        const placedId    = placements[zoneId];  // undefined if user left blank
+
+        const correctCard = document.getElementById(correctId);   // real card
+
+        // ----- 1. USER DROPPED SOMETHING ----------------------------------
+        if (placedId) {
+            const placedCard = document.getElementById(placedId);
+
+            // freeze it
+            placedCard.setAttribute("draggable", "false");
+
+            // is it right?
+            if (placedId === correctId) {
+                placedCard.classList.add("correct");              // ✅ green
+            } else {
+                allCorrect = false;
+                placedCard.classList.add("incorrect");            // ❌ red
+
+                // add a small green label under the wrong card
+                appendCorrectLabel(zone, correctCard, "correct answer");
             }
 
-            document.querySelectorAll(".answer-card").forEach((card) => {
-                card.setAttribute("draggable", "false");
-            });
-            document.querySelectorAll(".drop-zone").forEach((zone) => {
-                zone.removeEventListener("dragover", (e) => e.preventDefault());
-                zone.removeEventListener("drop", (e) => e.preventDefault());
-                zone.style.pointerEvents = "none";
-            });
+        // ----- 2. USER LEFT ZONE BLANK -------------------------------------
+        } else {
+            allCorrect = false;
+            appendCorrectLabel(zone, correctCard, "correct answer");
         }
+    }
 
+    /* lock the interface */
+    document.querySelectorAll(".answer-card").forEach((c) =>
+        c.setAttribute("draggable", "false")
+    );
+    document.querySelectorAll(".drop-zone").forEach((z) =>
+        (z.style.pointerEvents = "none")
+    );
+}
         if (allCorrect && !alreadyScored) {
             alreadyScored = true;
             incrementScore();
@@ -90,6 +128,24 @@ function verifyAnswers() {
         console.warn("No next URL specified.");
     }
 }
+
+
+// helper: place the correct answer label *below* the drop zone
+function appendCorrectLabel(zone, cardEl, labelText) {
+    if (!zone || !cardEl) return;
+
+    const container = zone.parentElement;
+
+    // create label
+    const label = document.createElement("div");
+    label.textContent = `(${labelText}: ${cardEl.dataset.label || cardEl.textContent})`;
+    label.classList.add("correct-label");
+
+    // insert it *after* the drop zone
+    container.insertBefore(label, zone.nextSibling);
+}
+
+   
 
 function enableNext() {
     const nextBtn = document.getElementById("next-button");
