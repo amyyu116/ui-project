@@ -49,8 +49,16 @@ def reset_quiz_state():
 # ---------- routes ----------
 @app.route("/")
 def welcome():
-    session.clear()                       # fresh start = clear everything
-    return render_template("welcome.html")
+    # # Starting a *new* run of the site → clear tutorial progress only
+    # for key in ("tutorial_complete", "visited_pages"):
+    #     session.pop(key, None)      # remove key if it is present
+
+    reset_quiz_state()              # still wipe quiz-only data
+    return render_template(
+        "welcome.html",
+        tutorial_complete=False,    # always locked on a brand-new run
+    )
+
 
 
 @app.route("/learn/<int:page_num>")

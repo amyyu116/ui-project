@@ -33,10 +33,10 @@
     },
     "3": {
         "type": "single",
-        "question": "What is the \"I-V-vi-IV\" chorc progression known for?",
+        "question": "What is the \"I-V-vi-IV\" chord progression known for?",
         "answers": [
-            ["Being named after Pachelbel's Canon", true],
-            ["Its diversity across genres", false],
+            ["Being named after Pachelbel's Canon", false],
+            ["Its diversity across genres", true],
             ["Its use in modern-day music", false],
             ["Being easy to improvise off of", false]
         ],

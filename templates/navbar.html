@@ -20,6 +20,12 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" />
 
     <style>
+        .nav-item.locked a {
+            pointer-events: none;          /* don’t let it be clicked        */
+            opacity: 0.45;                 /* faded                          */
+            filter: blur(1px) grayscale(1);/* subtle blur / desaturation      */
+        }
+
         body {
             margin: 0;
             font-family: "Lora", serif;
@@ -100,16 +106,25 @@
             <div class="nav-item {% if request.path == '/' %}active{% endif %}">
                 <a href="/">Home</a>
             </div>
+        
             <div class="nav-item {% if 'learn' in request.path %}active{% endif %}">
                 <a href="/learn/1">Tutorial</a>
             </div>
-            <div class="nav-item">
-                <a href="#" style="pointer-events: none; opacity: 0.5;">
-                    Quiz 🔒
-                </a>
-            </div>
-
+        
+            {# ---------- Quiz tab ---------- #}
+            {% if session.get('tutorial_complete') %}
+                <!-- unlocked -->
+                <div class="nav-item {% if 'quiz' in request.path %}active{% endif %}">
+                    <a href="/quiz/1">Quiz 🔓</a>
+                </div>
+            {% else %}
+                <!-- still locked -->
+                <div class="nav-item locked">
+                    <a href="#">Quiz 🔒</a>
+                </div>
+            {% endif %}
         </div>
+        
 
         {% if 'learn' in request.path or 'quiz' in request.path %}
         <div class="progress-container">
