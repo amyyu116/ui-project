@@ -10,7 +10,7 @@
 <body class="quiz">
     <div class="tutorial-container">
         <h1>Quiz - Question {{ page_num }}</h1>
-        <p>Current score: <strong id="score-display">{{ score }}</strong></p>
+        <p class="light-score">Current score: <strong id="score-display">{{ score }}</strong></p>
         <p>{{ question["question"] }}</p>
     </div>
 
@@ -19,6 +19,7 @@
             <div class="col-md-2"></div>
 
             {% for group in question["groups"] %}
+            {% set group_index = loop.index0 %}
             <div class="col-md-3">
                 <div class="row justify-content-center">
                     <h4>{{ group[0] }}</h4>
@@ -29,7 +30,7 @@
                     <button
                         type="button"
                         class="btn btn-outline-dark btn-option"
-                        data-group="{{ question['group_names'][loop.index0] }}"
+                        data-group="{{ question['group_names'][group_index] }}"
                         data-correct="{{ option[1]|lower }}"
                         id="{{ option[0].split('/')[0]|lower|replace(' ', '_') }}"
                     >
@@ -47,7 +48,7 @@
     <br />
 
     <div class="navigation-buttons">
-        <span>{{ page_num }}/{{ total_questions }}</span>
+        <span>{{ page_num }}/{{ total_pages }}</span>
         <button
             id="next-button"
             disabled

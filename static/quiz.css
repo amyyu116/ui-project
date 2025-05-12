@@ -18,8 +18,9 @@ body.quiz .container {
     padding-top: 1rem;
     padding-bottom: 1rem;
     margin-bottom: 0.5rem;
-    font-size: 1.1rem; /* Optional: make text a bit bigger */
+    font-size: 1.1rem;
     background-color: white;
+    border-color: #1c4587;
 }
 
 body.quiz h4 {
@@ -54,7 +55,7 @@ body.quiz h4 {
 }
 .answer-card {
     padding: 0.5rem 1rem;
-    border: 1px solid #333;
+    border: 1px solid #1c4587;
     border-radius: 6px;
     cursor: grab;
     background: #fff;
@@ -119,4 +120,8 @@ body.quiz h4 {
 audio {
     width: 200px;
     outline: none;
+}
+
+.light-score {
+    color: #8b8b8b !important;
 }

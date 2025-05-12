@@ -1,0 +1,73 @@
+{% extends "navbar.html" %}
+
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block content %}
+<div class="tutorial-container">
+    <h1>{{ page_heading }}</h1>
+
+    {% if page_type == 'image_text' %}
+        <div class="tutorial-container">
+            <div class="image-container">
+                <img src="{{ url_for('static', filename=media_image) }}" alt="C Major Scale">
+            </div>
+            <p>{{ paragraph | safe }}</p>
+        </div>
+
+    {% elif page_type == 'traits_media' %}
+        <div class="tutorial-container">
+            <div class="row">
+                <div class="col-lg-6 col-md-12 mb-4">
+                    <div>
+                        <p class="list-header"><strong>Traits</strong></p>
+                        <ul>
+                            {% for trait in traits %}
+                                <li>{{ trait | safe }}</li>
+                            {% endfor %}
+                        </ul>
+                    <br>
+                        <p class="list-header"><strong>Notable Songs</strong></p>
+                        <ul>
+                            {% for song in songs %}
+                                <li>{{ song }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-12">
+                    <div class="d-flex justify-content-around flex-row flex-wrap gap-3">
+                        {% for video in videos %}
+                        <div class="text-center" style="flex: 0 0 48%;">
+                            <p class="mb-2"><em>{{ video.title }}</em></p>
+                            <video controls style="width: 100%; height: auto;">
+                                <source src="{{ url_for('static', filename=video.filename) }}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+    {% endif %}
+
+    {% block main %}{% endblock %}
+
+    <div class="navigation-buttons">
+        {% if prev_url %}
+            <a href="{{ prev_url }}"><button>Back</button></a>
+        {% else %}
+            <button disabled>Back</button>
+        {% endif %}
+        <span>{{ page_num }}/{{ total_pages }}</span>
+        {% if next_url %}
+            <a href="{{ next_url }}"><button>Next</button></a>
+        {% else %}
+            <a href="/quiz/1"><button>Proceed to quiz</button></a>
+        {% endif %}
+    </div>
+</div>
+{% block scripts %}{% endblock %}
+{% endblock %}

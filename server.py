@@ -2,7 +2,6 @@ from flask import Flask, render_template, request, jsonify, session, redirect
 import json, uuid
 from datetime import datetime, timezone
 
-from openai import chat
 import json
 
 
@@ -16,6 +15,9 @@ filename = f"user{id_}_log.json"
 
 with open('quiz.json', 'r') as f:
     questions = json.load(f)
+
+with open('learn.json', 'r') as f:
+    tutorials = json.load(f)
 
 chord_names = {
     "i_chord":   "C Major",
@@ -71,14 +73,34 @@ def render_tutorial(page_num):
     if not tutorial_complete and sorted(visited_pages) == list(range(1, total_pages + 1)):
         session["tutorial_complete"] = True
         tutorial_complete = True
+    
+    # ----- 3. retrieve data -----
+    data = tutorials.get(str(page_num))
+    type = data["type"]
+    context = {
+        "page_num": page_num,
+        "total_pages": total_pages,
+        "tutorial_complete": tutorial_complete,
+        "page_title": data["title"],
+        "page_heading": data["heading"],
+        "page_type": type,
+        "next_url": data.get("next_url"),
+        "prev_url": data.get("prev_url")
+    }
 
-    # ----- 3. render -----
-    return render_template(
-        f"learn{page_num}.html",
-        page_num=page_num,
-        total_pages=total_pages,
-        tutorial_complete=tutorial_complete,
-    )
+    # ----- 4. render -----
+    if type == "image_text":
+        context["media_image"] = data["image"]
+        context["paragraph"] = data["paragraph"]
+    elif type == "traits_media":
+        context["traits"] = data["traits"]
+        context["songs"] = data["songs"]
+        context["videos"] = data["videos"]
+
+    if type == "custom":
+        return render_template(f"learn{page_num}.html", **context)
+    return render_template("learn_template.html", **context)
+
 
 
 # track page visits (called from JS on every page load)

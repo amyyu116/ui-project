@@ -1,0 +1,84 @@
+{
+    "1": {
+      "title": "Chords and Chord Qualities",
+      "heading": "Chords and Chord Qualities",
+      "type": "custom",
+      "next_url": "/learn/2",
+      "prev_url": null
+    },
+    "2": {
+      "title": "Scales and Scale Types",
+      "heading": "Scales and Scale Types",
+      "type": "image_text",
+      "image": "c_major_scale.png",
+      "paragraph": "A <span class=\"blue\">scale</span> is a set of notes arranged in a specific order, going up or down in pitch. Think of it like a musical ladder that helps build melodies and chords. The <span class=\"red\">tonic</span> is known as the first note of the scale.",
+      "next_url": "/learn/3",
+      "prev_url": "/learn/1"
+    },
+    "3": {
+      "title": "Chord Notation in Major Scales",
+      "heading": "Chord Notation in Major Scales",
+      "type": "custom",
+      "next_url": "/learn/4",
+      "prev_url": "/learn/2"
+    },
+    "4": {
+      "title": "Popular Progressions",
+      "heading": "Popular Progressions: \"four-chord progression\"",
+      "type": "traits_media",
+      "traits": [
+        "Most commonly utilizes <strong><em>I-V-vi-IV</em></strong>, sometimes rearranged",
+        "Known for its diversity across genres"
+      ],
+      "songs": [
+        "\"Someone Like You\" - Adele",
+        "\"Little Talks\" - Of Monsters and Men",
+        "\"Rude\" - Magic!"
+      ],
+      "videos": [
+        {"title": "\u201cSomeone Like You\u201d chorus", "filename": "someonelikeyou.mp4"},
+        {"title": "\u201cLittle Talks\u201d chorus", "filename": "littletalks.mp4"}
+      ],
+      "next_url": "/learn/5",
+      "prev_url": "/learn/3"
+    },
+    "5": {
+      "title": "Popular Progressions",
+      "heading": "Popular Progressions: \"Pachelbel's Progression\"",
+      "type": "traits_media",
+      "traits": [
+        "Utilizes <strong><em>I-V-vi-iii-IV</em></strong>, sometimes rearranged",
+        "Originally a famous wedding song, named \"Canon in D Major\" or \"Pachelbel's Canon\" after its composer"
+      ],
+      "songs": [
+        "\"Canon in D Major\" - Johann Pachelbel",
+        "\"Firework\" - Katy Perry",
+        "\"Deep Sea Girl\" - Yuuyu"
+      ],
+      "videos": [
+        {"title": "\u201cDeep Sea Girl\u201d chorus", "filename": "deepseagirl.mp4"}
+      ],
+      "next_url": "/learn/6",
+      "prev_url": "/learn/4"
+    },
+    "6": {
+      "title": "Popular Progressions",
+      "heading": "Popular Progressions: \"the ii-V-I\"",
+      "type": "traits_media",
+      "traits": [
+        "Three-chord progression of <strong><em>ii-V-I</em></strong>, sometimes rearranged",
+        "Fundamental for jazz musicians, providing a harmonic framework for improvisation and establishing a clear tonal center"
+      ],
+      "songs": [
+        "\"Autumn Leaves\" - Nat King Cole",
+        "\"All the Things You Are\" - Ella Fitzgerald",
+        "\"Fly Me to the Moon\" - Frank Sinatra"
+      ],
+      "videos": [
+        {"title": "\u201cFly Me to the Moon\" chorus", "filename": "flymetothemoon.mp4"}
+      ],
+      "next_url": null,
+      "prev_url": "/learn/5"
+    }
+  }
+  

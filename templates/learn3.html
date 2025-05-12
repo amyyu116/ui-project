@@ -1,86 +1,40 @@
-{% extends "navbar.html" %} {% block title %}Chord Notation in Major Scales{%
-endblock %} {% block content %}
-<div class="tutorial-container">
-    <h1>Chord Notation in Major Scales</h1>
-    <p>
-        Each note in a scale is assigned a number based on its position,
-        starting from the tonic. <br />Chords built on each of these notes are
-        denoted with <b>Roman numerals</b>.
-    </p>
-    <div class="piano" id="piano">
-        <!-- White Keys -->
-        <div class="white-key" data-note="C4">
-            <span class="key-label">C</span>
-        </div>
-        <div class="white-key" data-note="D4">
-            <span class="key-label">D</span>
-        </div>
-        <div class="white-key" data-note="E4">
-            <span class="key-label">E</span>
-        </div>
-        <div class="white-key" data-note="F4">
-            <span class="key-label">F</span>
-        </div>
-        <div class="white-key" data-note="G4">
-            <span class="key-label">G</span>
-        </div>
-        <div class="white-key" data-note="A4">
-            <span class="key-label">A</span>
-        </div>
-        <div class="white-key" data-note="B4">
-            <span class="key-label">B</span>
-        </div>
-        <div class="white-key" data-note="C5">
-            <span class="key-label">C</span>
-        </div>
-        <div class="white-key" data-note="D5">
-            <span class="key-label">D</span>
-        </div>
-        <div class="white-key" data-note="E5">
-            <span class="key-label">E</span>
-        </div>
-        <div class="white-key" data-note="F5">
-            <span class="key-label">F</span>
-        </div>
+{% extends "learn_template.html" %}
 
-        <!-- Black Keys -->
-        <div class="black-key" style="left: 38px" data-note="C#4">
-            <span class="key-label">C#</span>
-        </div>
-        <div class="black-key" style="left: 98px" data-note="D#4">
-            <span class="key-label">D#</span>
-        </div>
-        <div class="black-key" style="left: 222px" data-note="F#4">
-            <span class="key-label">F#</span>
-        </div>
-        <div class="black-key" style="left: 282px" data-note="G#4">
-            <span class="key-label">G#</span>
-        </div>
-        <div class="black-key" style="left: 342px" data-note="A#4">
-            <span class="key-label">A#</span>
-        </div>
-        <div class="black-key" style="left: 462px" data-note="C#5">
-            <span class="key-label">C#</span>
-        </div>
-        <div class="black-key" style="left: 522px" data-note="D#5">
-            <span class="key-label">D#</span>
-        </div>
-    </div>
+{% set page_title = "Chord Notation in Major Scales" %}
+{% set page_heading = "Chord Notation in Major Scales" %}
+{% set prev_url = "/learn/2" %}
+{% set next_url = "/learn/4" %}
 
-    <div class="chord-buttons">
-        <button data-chord="i_chord">I</button>
-        <button data-chord="ii_chord">ii</button>
-        <button data-chord="iii_chord">iii</button>
-        <button data-chord="iv_chord">IV</button>
-        <button data-chord="v_chord">V</button>
-        <button data-chord="vi_chord">vi</button>
-        <button data-chord="vii_chord">vii°</button><br />
-        <span class="small">Try: (ii-V-I) (I-V-vi-IV) (I-V-vi-iii-IV)</span>
-    </div>
+{% block main %}
+<p>
+    Each note in a scale is assigned a number based on its position, starting from the tonic. <br />
+    Chords built on each of these notes are denoted with <b>Roman numerals</b>.
+</p>
+
+<div class="piano" id="piano">
+    <!-- white keys -->
+    {% for note in ['C4','D4','E4','F4','G4','A4','B4','C5','D5','E5','F5'] %}
+        <div class="white-key" data-note="{{ note }}">
+            <span class="key-label">{{ note[:-1] }}</span>
+        </div>
+    {% endfor %}
+
+    <!-- black keys -->
+    {% for item in [('C#4', 38), ('D#4', 98), ('F#4', 222), ('G#4', 282), ('A#4', 342), ('C#5', 462), ('D#5', 522)] %}
+        <div class="black-key" style="left: {{ item[1] }}px" data-note="{{ item[0] }}">
+            <span class="key-label">{{ item[0][:-1] }}</span>
+        </div>
+    {% endfor %}
 </div>
-<div class="navigation-buttons">
-    <a href="/learn/2"><button>Back</button></a>
-    <span>3/6</span>
-    <a href="/learn/4"><button>Next</button></a>
+
+<div class="chord-buttons">
+    <button data-chord="i_chord">I</button>
+    <button data-chord="ii_chord">ii</button>
+    <button data-chord="iii_chord">iii</button>
+    <button data-chord="iv_chord">IV</button>
+    <button data-chord="v_chord">V</button>
+    <button data-chord="vi_chord">vi</button>
+    <button data-chord="vii_chord">vii°</button><br />
+    <span class="small">Try: (ii-V-I) (I-V-vi-IV) (I-V-vi-iii-IV)</span>
 </div>
 {% endblock %}

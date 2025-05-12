@@ -24,10 +24,10 @@
         "type": "single",
         "question": "How are chords in a major scale ordered?",
         "answers": [
-            ["I-ii-iii-IV-V-vi-vii°", true],
-            ["I-ii°-iii-iv-V-VI-vii", false],
+            ["I-ii-iii-IV-V-vi-vii\u00b0", true],
+            ["I-ii\u00b0-iii-iv-V-VI-vii", false],
             ["i-ii-III-iv-v-VI-VII", false],
-            ["I-II-iii-iv°-V-vi-vii", false]
+            ["I-II-iii-iv\u00b0-V-vi-vii", false]
         ],
         "media": null
     },
