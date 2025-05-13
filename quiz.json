@@ -51,7 +51,7 @@
             ["Rock", false],
             ["Blues", false]
         ],
-        "media": "{{ url_for('static', filename='q4_audio.mp3') }}"
+        "media": "/static/q4_audio.mp3"
     },
     "5": {
         "type": "dragdrop",

@@ -115,7 +115,7 @@
             {% if session.get('tutorial_complete') %}
                 <!-- unlocked -->
                 <div class="nav-item {% if 'quiz' in request.path %}active{% endif %}">
-                    <a href="/quiz/1">Quiz 🔓</a>
+                    <a href="/restart-quiz">Quiz 🔓</a>
                 </div>
             {% else %}
                 <!-- still locked -->

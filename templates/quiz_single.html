@@ -13,9 +13,8 @@
         <p>{{ question["question"] }}</p>
         {% if question["media"] %}
         <audio controls>
-            <source src="{{ question['media'] }}" type="audio/mpeg" />
-            Your browser does not support the audio element.
-        </audio>
+            <source src="/static/q4_audio.mp3" type="audio/mpeg" />
+          </audio>
         {% endif %}
     </div>
 
